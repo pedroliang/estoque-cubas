@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ESTOQUE CUBAS</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%232f6df0'/><text x='32' y='45' font-family='monospace' font-size='30' font-weight='700' fill='white' text-anchor='middle'>CB</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%238b5cf6'/><text x='32' y='45' font-family='monospace' font-size='30' font-weight='700' fill='white' text-anchor='middle'>CB</text></svg>">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -19,11 +19,11 @@
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{background:#0a0d12;color:#e3e9f0;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{background:#0e0b13;color:#e3e9f0;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   ::-webkit-scrollbar{width:11px;height:11px}
-  ::-webkit-scrollbar-track{background:#0a0d12}
-  ::-webkit-scrollbar-thumb{background:#283341;border-radius:0;border:3px solid #0a0d12}
-  ::-webkit-scrollbar-thumb:hover{background:#34404f}
+  ::-webkit-scrollbar-track{background:#0e0b13}
+  ::-webkit-scrollbar-thumb{background:#352d44;border-radius:0;border:3px solid #0e0b13}
+  ::-webkit-scrollbar-thumb:hover{background:#433a54}
   input{font-family:inherit}
   @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.82)}}
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -31,13 +31,13 @@
   @keyframes barIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
 </helmet>
-<div style="min-height:100vh;background:#0a0d12;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:34px 34px;">
+<div style="min-height:100vh;background:#0e0b13;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:34px 34px;">
 
   <sc-if value="{{ notAuthed }}" hint-placeholder-val="{{ false }}">
     <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;">
-      <form onSubmit="{{ submitLogin }}" style="width:100%;max-width:360px;background:#0d1118;border:1px solid #2c3744;border-top:3px solid #2f6df0;padding:26px 24px;display:flex;flex-direction:column;gap:14px;">
+      <form onSubmit="{{ submitLogin }}" style="width:100%;max-width:360px;background:#130f1a;border:1px solid #3a3149;border-top:3px solid #8b5cf6;padding:26px 24px;display:flex;flex-direction:column;gap:14px;">
         <div style="display:flex;align-items:center;gap:13px;margin-bottom:4px;">
-          <div style="width:38px;height:38px;flex:none;background:linear-gradient(145deg,#2f6df0,#1d4fbf);border:1px solid #4d82ff;display:flex;align-items:center;justify-content:center;">
+          <div style="width:38px;height:38px;flex:none;background:linear-gradient(145deg,#8b5cf6,#6d3fd6);border:1px solid #a78bfa;display:flex;align-items:center;justify-content:center;">
             <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;color:#fff;letter-spacing:-.5px;">CB</span>
           </div>
           <div>
@@ -47,11 +47,11 @@
         </div>
         <label style="display:flex;flex-direction:column;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:1px;color:#8b97a6;">
           LOGIN
-          <input value="{{ loginUser }}" onChange="{{ onLoginUser }}" autoComplete="username" autoCapitalize="none" spellcheck="false" autoFocus="autofocus" style="width:100%;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:11px 12px;font-size:14px;outline:none;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)" />
+          <input value="{{ loginUser }}" onChange="{{ onLoginUser }}" autoComplete="username" autoCapitalize="none" spellcheck="false" autoFocus="autofocus" style="width:100%;background:#17131f;border:1px solid #3a3149;color:#e7edf4;padding:11px 12px;font-size:14px;outline:none;" style-focus="border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15)" />
         </label>
         <label style="display:flex;flex-direction:column;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:1px;color:#8b97a6;">
           SENHA
-          <input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" autoComplete="current-password" style="width:100%;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:11px 12px;font-size:14px;outline:none;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)" />
+          <input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" autoComplete="current-password" style="width:100%;background:#17131f;border:1px solid #3a3149;color:#e7edf4;padding:11px 12px;font-size:14px;outline:none;" style-focus="border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15)" />
         </label>
         <sc-if value="{{ loginErrShow }}" hint-placeholder-val="{{ false }}">
           <div style="font-size:12px;line-height:1.5;color:#ef9a9a;">{{ loginErr }}</div>
@@ -62,16 +62,16 @@
   </sc-if>
 
   <sc-if value="{{ authed }}" hint-placeholder-val="{{ true }}">
-  <header style="position:sticky;top:0;z-index:30;background:rgba(11,15,21,.93);backdrop-filter:blur(8px);border-bottom:1px solid #222b37;">
+  <header style="position:sticky;top:0;z-index:30;background:rgba(15,11,20,.93);backdrop-filter:blur(8px);border-bottom:1px solid #2c253a;">
     <div style="max-width:1280px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 18px;">
       <div style="display:flex;align-items:center;gap:13px;min-width:0;">
-        <div style="width:38px;height:38px;flex:none;background:linear-gradient(145deg,#2f6df0,#1d4fbf);border:1px solid #4d82ff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px #0a0d12,0 6px 16px rgba(47,109,240,.32);">
+        <div style="width:38px;height:38px;flex:none;background:linear-gradient(145deg,#8b5cf6,#6d3fd6);border:1px solid #a78bfa;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px #0e0b13,0 6px 16px rgba(139,92,246,.32);">
           <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;color:#fff;letter-spacing:-.5px;">CB</span>
         </div>
         <div style="min-width:0;">
           <div style="display:flex;align-items:center;gap:9px;">
             <h1 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;letter-spacing:1.5px;color:#f2f6fb;">ESTOQUE CUBAS</h1>
-            <span style="font-size:9.5px;font-weight:600;letter-spacing:1px;color:#7d8a99;border:1px solid #2c3744;padding:2px 6px;">1B</span>
+            <span style="font-size:9.5px;font-weight:600;letter-spacing:1px;color:#7d8a99;border:1px solid #3a3149;padding:2px 6px;">1B</span>
           </div>
           <div style="font-size:11px;color:#6b7889;letter-spacing:.3px;margin-top:1px;">Almoxarifado · Cubas</div>
         </div>
@@ -98,10 +98,10 @@
           <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#cdd6e1;">{{ updatedTime }}</div>
           <div style="font-size:10px;color:#6b7889;letter-spacing:.3px;">{{ updatedAgo }}</div>
         </div>
-        <button onClick="{{ refresh }}" style="display:flex;align-items:center;gap:7px;background:#161b24;color:#cdd6e1;border:1px solid #2c3744;padding:8px 13px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="background:#1c232e;border-color:#3a4757;color:#fff;">
+        <button onClick="{{ refresh }}" style="display:flex;align-items:center;gap:7px;background:#1d1827;color:#cdd6e1;border:1px solid #3a3149;padding:8px 13px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="background:#251f31;border-color:#4a405c;color:#fff;">
           <span style="{{ spinStyle }}">⟳</span> Atualizar
         </button>
-        <button onClick="{{ logoutBtn }}" title="Sair do site" style="background:transparent;color:#8b97a6;border:1px solid #2c3744;padding:8px 11px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="border-color:#3a4757;color:#fff;">Sair</button>
+        <button onClick="{{ logoutBtn }}" title="Sair do site" style="background:transparent;color:#8b97a6;border:1px solid #3a3149;padding:8px 11px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="border-color:#4a405c;color:#fff;">Sair</button>
       </div>
     </div>
   </header>
@@ -117,12 +117,12 @@
     <section style="display:flex;gap:12px;flex-wrap:wrap;align-items:stretch;margin-bottom:18px;">
       <div style="flex:1;min-width:280px;position:relative;display:flex;align-items:center;">
         <span style="position:absolute;left:15px;color:#5f6b7a;font-size:16px;pointer-events:none;">⌕</span>
-        <input value="{{ query }}" onChange="{{ onSearch }}" placeholder="Buscar por código, descrição ou localização…" style="width:100%;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:13px 14px 13px 42px;font-size:14px;outline:none;letter-spacing:.2px;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)" />
+        <input value="{{ query }}" onChange="{{ onSearch }}" placeholder="Buscar por código, descrição ou localização…" style="width:100%;background:#17131f;border:1px solid #3a3149;color:#e7edf4;padding:13px 14px 13px 42px;font-size:14px;outline:none;letter-spacing:.2px;" style-focus="border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15)" />
         <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ clearQuery }}" style="position:absolute;right:10px;background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;" style-hover="color:#fff;border-color:#3a4757;">✕</button>
+          <button onClick="{{ clearQuery }}" style="position:absolute;right:10px;background:#251f31;border:1px solid #3a3149;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;" style-hover="color:#fff;border-color:#4a405c;">✕</button>
         </sc-if>
       </div>
-      <div style="display:flex;background:#11151c;border:1px solid #2c3744;padding:3px;gap:2px;">
+      <div style="display:flex;background:#17131f;border:1px solid #3a3149;padding:3px;gap:2px;">
         <sc-for list="{{ fields }}" as="f" hint-placeholder-count="4">
           <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
         </sc-for>
@@ -145,36 +145,36 @@
     </section>
 
     <sc-if value="{{ bkOpen }}" hint-placeholder-val="{{ false }}">
-      <section style="background:#0d1118;border:1px solid #2c3744;border-left:3px solid #b98a2f;margin-bottom:18px;">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #1c232e;">
+      <section style="background:#130f1a;border:1px solid #3a3149;border-left:3px solid #b98a2f;margin-bottom:18px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #251f31;">
           <div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:1.2px;color:#f2f6fb;">BACKUPS DO ESTOQUE</div>
             <div style="font-size:11.5px;color:#6b7889;margin-top:3px;line-height:1.5;">Um backup é criado automaticamente ANTES de cada ajuste. "Desfazer ajuste" volta só os SKUs daquele ajuste · "Restaurar tudo" volta a aba inteira (TOTAL UN e ATUALIZAÇÃO) para aquele momento. Antes de restaurar, o estado atual também é salvo.</div>
           </div>
-          <button onClick="{{ toggleBk }}" style="background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;flex:none;" style-hover="color:#fff;border-color:#3a4757;">✕</button>
+          <button onClick="{{ toggleBk }}" style="background:#251f31;border:1px solid #3a3149;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;flex:none;" style-hover="color:#fff;border-color:#4a405c;">✕</button>
         </div>
         <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <button onClick="{{ backupNow }}" style="background:#2a2414;color:#e8c27a;border:1px solid #6b5426;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;" style-hover="border-color:#8a6c31;color:#ffd892;">＋ Criar backup agora</button>
-            <button onClick="{{ reloadBk }}" style="background:#161b24;color:#8b97a6;border:1px solid #2c3744;padding:9px 14px;font-size:12px;cursor:pointer;" style-hover="color:#fff;border-color:#3a4757;">⟳ Atualizar lista</button>
-            <input value="{{ bkFilter }}" onChange="{{ onBkFilter }}" placeholder="Filtrar por data (ex.: 07/10)" style="background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;width:200px;" style-focus="border-color:#b98a2f" />
+            <button onClick="{{ reloadBk }}" style="background:#1d1827;color:#8b97a6;border:1px solid #3a3149;padding:9px 14px;font-size:12px;cursor:pointer;" style-hover="color:#fff;border-color:#4a405c;">⟳ Atualizar lista</button>
+            <input value="{{ bkFilter }}" onChange="{{ onBkFilter }}" placeholder="Filtrar por data (ex.: 07/10)" style="background:#17131f;border:1px solid #3a3149;color:#e7edf4;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;width:200px;" style-focus="border-color:#b98a2f" />
             <sc-if value="{{ bkMsgShow }}" hint-placeholder-val="{{ false }}">
               <span style="{{ bkMsgStyle }}">{{ bkMsg }}</span>
             </sc-if>
           </div>
-          <div style="border:1px solid #1c232e;max-height:420px;overflow-y:auto;">
-            <div style="display:grid;grid-template-columns:150px 90px minmax(200px,1fr) 60px 270px;gap:8px;padding:9px 12px;background:#12161e;border-bottom:1px solid #222b37;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;position:sticky;top:0;">
+          <div style="border:1px solid #251f31;max-height:420px;overflow-y:auto;">
+            <div style="display:grid;grid-template-columns:150px 90px minmax(200px,1fr) 60px 270px;gap:8px;padding:9px 12px;background:#191421;border-bottom:1px solid #2c253a;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;position:sticky;top:0;">
               <div>DATA/HORA</div><div>TIPO</div><div>DESCRIÇÃO</div><div style="text-align:right;">SKUS</div><div style="text-align:right;">AÇÃO</div>
             </div>
             <sc-for list="{{ bkRows }}" as="k" hint-placeholder-count="0">
-              <div style="display:grid;grid-template-columns:150px 90px minmax(200px,1fr) 60px 270px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid #161b24;font-size:12.5px;">
+              <div style="display:grid;grid-template-columns:150px 90px minmax(200px,1fr) 60px 270px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid #1d1827;font-size:12.5px;">
                 <div style="font-family:'IBM Plex Mono',monospace;color:#cdd6e1;">{{ k.at }}</div>
                 <div style="{{ k.tipoStyle }}">{{ k.tipo }}</div>
                 <div style="color:#aeb9c6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="{{ k.desc }}">{{ k.desc }}</div>
                 <div style="text-align:right;font-family:'IBM Plex Mono',monospace;color:#8b97a6;">{{ k.itens }}</div>
                 <div style="display:flex;justify-content:flex-end;gap:6px;">
                   <sc-if value="{{ k.hasLote }}" hint-placeholder-val="{{ false }}">
-                    <button onClick="{{ k.undo }}" style="background:#131a2b;color:#7fa5f5;border:1px solid #2a3d66;padding:6px 10px;font-size:11.5px;font-weight:600;cursor:pointer;" style-hover="border-color:#4d82ff;color:#bcd4ff;">↶ Desfazer ajuste</button>
+                    <button onClick="{{ k.undo }}" style="background:#1b1430;color:#b39cf7;border:1px solid #43306b;padding:6px 10px;font-size:11.5px;font-weight:600;cursor:pointer;" style-hover="border-color:#a78bfa;color:#ddd1ff;">↶ Desfazer ajuste</button>
                   </sc-if>
                   <button onClick="{{ k.restore }}" style="background:#2a1818;color:#ef9a86;border:1px solid #5a2e26;padding:6px 10px;font-size:11.5px;font-weight:600;cursor:pointer;" style-hover="border-color:#7a3d32;color:#ffb3a1;">⟲ Restaurar tudo</button>
                 </div>
@@ -189,21 +189,21 @@
     </sc-if>
 
     <sc-if value="{{ baixaOpen }}" hint-placeholder-val="{{ false }}">
-      <section style="background:#0d1118;border:1px solid #2c3744;border-left:3px solid #2f6df0;margin-bottom:18px;">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #1c232e;">
+      <section style="background:#130f1a;border:1px solid #3a3149;border-left:3px solid #8b5cf6;margin-bottom:18px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #251f31;">
           <div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:1.2px;color:#f2f6fb;">{{ baixaTitle }}</div>
             <div style="font-size:11.5px;color:#6b7889;margin-top:3px;line-height:1.5;">{{ baixaHint }}</div>
           </div>
-          <button onClick="{{ toggleBaixa }}" style="background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;flex:none;" style-hover="color:#fff;border-color:#3a4757;">✕</button>
+          <button onClick="{{ toggleBaixa }}" style="background:#251f31;border:1px solid #3a3149;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;flex:none;" style-hover="color:#fff;border-color:#4a405c;">✕</button>
         </div>
         <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;gap:2px;background:#11151c;border:1px solid #2c3744;padding:3px;align-self:flex-start;">
+          <div style="display:flex;gap:2px;background:#17131f;border:1px solid #3a3149;padding:3px;align-self:flex-start;">
             <button onClick="{{ modeSaida }}" style="{{ modeSaidaStyle }}">− Baixa (subtrair)</button>
             <button onClick="{{ modeEntrada }}" style="{{ modeEntradaStyle }}">+ Entrada (somar)</button>
             <button onClick="{{ modeDefinir }}" style="{{ modeDefinirStyle }}">= Definir (valor final)</button>
           </div>
-          <textarea value="{{ baixaText }}" onChange="{{ onBaixaText }}" spellcheck="false" placeholder="Cole aqui, ex.:&#10;A102&#9;10&#10;B205&#9;4" style="width:100%;min-height:110px;resize:vertical;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6;outline:none;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)"></textarea>
+          <textarea value="{{ baixaText }}" onChange="{{ onBaixaText }}" spellcheck="false" placeholder="Cole aqui, ex.:&#10;A102&#9;10&#10;B205&#9;4" style="width:100%;min-height:110px;resize:vertical;background:#17131f;border:1px solid #3a3149;color:#e7edf4;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6;outline:none;" style-focus="border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15)"></textarea>
 
           <sc-if value="{{ hasBaixaItems }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:11.5px;color:#8b97a6;letter-spacing:.3px;">{{ baixaSummary }}</div>
@@ -214,8 +214,8 @@
               </div>
             </sc-if>
 
-            <div style="border:1px solid #1c232e;">
-              <div style="display:grid;grid-template-columns:100px minmax(180px,1fr) 90px 90px 100px;gap:8px;padding:9px 12px;background:#12161e;border-bottom:1px solid #222b37;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;">
+            <div style="border:1px solid #251f31;">
+              <div style="display:grid;grid-template-columns:100px minmax(180px,1fr) 90px 90px 100px;gap:8px;padding:9px 12px;background:#191421;border-bottom:1px solid #2c253a;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;">
                 <div>SKU</div><div>DESCRIÇÃO</div><div style="text-align:right;">ATUAL</div><div style="text-align:right;">{{ qtyColLabel }}</div><div style="text-align:right;">RESULTADO</div>
               </div>
               <sc-for list="{{ baixaItems }}" as="b" hint-placeholder-count="0">
@@ -231,7 +231,7 @@
 
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <button onClick="{{ approveBaixa }}" style="{{ approveStyle }}">✓ {{ approveLabel }}</button>
-              <button onClick="{{ clearBaixa }}" style="background:#161b24;color:#8b97a6;border:1px solid #2c3744;padding:10px 16px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="color:#fff;border-color:#3a4757;">Limpar simulação</button>
+              <button onClick="{{ clearBaixa }}" style="background:#1d1827;color:#8b97a6;border:1px solid #3a3149;padding:10px 16px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="color:#fff;border-color:#4a405c;">Limpar simulação</button>
             </div>
           </sc-if>
           <sc-if value="{{ applyAreaShow }}" hint-placeholder-val="{{ false }}">
@@ -240,7 +240,7 @@
                   <span style="{{ applyMsgStyle }}">{{ applyMsg }}</span>
                 </sc-if>
                 <sc-if value="{{ canUndoLast }}" hint-placeholder-val="{{ false }}">
-                  <button onClick="{{ undoLast }}" style="background:#131a2b;color:#7fa5f5;border:1px solid #2a3d66;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;" style-hover="border-color:#4d82ff;color:#bcd4ff;">↶ Desfazer este ajuste</button>
+                  <button onClick="{{ undoLast }}" style="background:#1b1430;color:#b39cf7;border:1px solid #43306b;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;" style-hover="border-color:#a78bfa;color:#ddd1ff;">↶ Desfazer este ajuste</button>
                 </sc-if>
             </div>
           </sc-if>
@@ -250,7 +250,7 @@
 
     <section style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;">
       <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="4">
-        <div style="background:#11151c;border:1px solid #222b37;border-left:3px solid #2c3744;padding:14px 16px;">
+        <div style="background:#17131f;border:1px solid #2c253a;border-left:3px solid #3a3149;padding:14px 16px;">
           <div style="font-size:10.5px;font-weight:600;letter-spacing:1.2px;color:#6b7889;text-transform:uppercase;">{{ t.label }}</div>
           <div style="{{ t.numStyle }}">{{ t.value }}</div>
           <div style="font-size:11px;color:#5f6b7a;margin-top:2px;">{{ t.sub }}</div>
@@ -258,17 +258,17 @@
       </sc-for>
     </section>
 
-    <section style="background:#0d1118;border:1px solid #222b37;">
+    <section style="background:#130f1a;border:1px solid #2c253a;">
       <sc-if value="{{ colActive }}" hint-placeholder-val="{{ false }}">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 12px;background:#101a2e;border-bottom:1px solid #223557;font-size:12px;color:#9fc1ff;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 12px;background:#1a1230;border-bottom:1px solid #3a2a5c;font-size:12px;color:#cdbcff;">
           <span>{{ colActiveText }}</span>
-          <button onClick="{{ clearCols }}" style="background:#161b24;color:#cdd6e1;border:1px solid #2c3744;padding:5px 11px;font-size:11.5px;font-weight:600;cursor:pointer;">Limpar filtros</button>
+          <button onClick="{{ clearCols }}" style="background:#1d1827;color:#cdd6e1;border:1px solid #3a3149;padding:5px 11px;font-size:11.5px;font-weight:600;cursor:pointer;">Limpar filtros</button>
         </div>
       </sc-if>
       <div style="overflow-x:auto;">
         <div style="min-width:960px;">
 
-          <div style="display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;align-items:center;background:#12161e;border-bottom:1px solid #222b37;">
+          <div style="display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;align-items:center;background:#191421;border-bottom:1px solid #2c253a;">
             <div></div>
             <div style="padding:5px 4px;"><button onClick="{{ hCod.open }}" title="Filtrar e ordenar" style="{{ hCod.style }}">COD. <span style="{{ hCod.markStyle }}">{{ hCod.mark }}</span></button></div>
             <div style="padding:5px 4px;"><button onClick="{{ hDesc.open }}" title="Filtrar e ordenar" style="{{ hDesc.style }}">DESCRIÇÃO <span style="{{ hDesc.markStyle }}">{{ hDesc.mark }}</span></button></div>
@@ -282,16 +282,16 @@
           </div>
 
           <sc-for list="{{ skeleton }}" as="s" hint-placeholder-count="0">
-            <div style="display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;border-bottom:1px solid #161b24;">
+            <div style="display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;border-bottom:1px solid #1d1827;">
               <div></div>
-              <div style="padding:14px 10px;"><div style="height:13px;width:48px;background:linear-gradient(90deg,#161b24,#1e2531,#161b24);background-size:340px 100%;animation:shimmer 1.3s infinite;"></div></div>
-              <div style="padding:14px 10px;"><div style="height:13px;width:75%;background:linear-gradient(90deg,#161b24,#1e2531,#161b24);background-size:340px 100%;animation:shimmer 1.3s infinite;"></div></div>
+              <div style="padding:14px 10px;"><div style="height:13px;width:48px;background:linear-gradient(90deg,#1d1827,#282134,#1d1827);background-size:340px 100%;animation:shimmer 1.3s infinite;"></div></div>
+              <div style="padding:14px 10px;"><div style="height:13px;width:75%;background:linear-gradient(90deg,#1d1827,#282134,#1d1827);background-size:340px 100%;animation:shimmer 1.3s infinite;"></div></div>
               <div style="padding:14px 10px;"></div><div></div><div></div><div></div><div></div><div></div><div></div>
             </div>
           </sc-for>
 
           <sc-for list="{{ rows }}" as="p" hint-placeholder-count="0">
-            <div style="{{ p.rowStyle }}" style-hover="background:#141a23;">
+            <div style="{{ p.rowStyle }}" style-hover="background:#1b1625;">
               <div style="{{ p.barStyle }}"></div>
               <div style="{{ p.codStyle }}">{{ p.cod }}</div>
               <div style="padding:13px 10px;font-size:13px;color:#dbe3ec;line-height:1.4;text-wrap:pretty;">{{ p.desc }}</div>
@@ -301,7 +301,7 @@
               <div style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#aeb9c6;">{{ p.cAberta }}</div>
               <div style="padding:13px 10px;display:flex;flex-wrap:wrap;gap:4px;">
                 <sc-for list="{{ p.locals }}" as="loc" hint-placeholder-count="0">
-                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#cdd6e1;background:#1b222d;border:1px solid #2c3744;padding:2px 7px;letter-spacing:.5px;">{{ loc }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#cdd6e1;background:#241e30;border:1px solid #3a3149;padding:2px 7px;letter-spacing:.5px;">{{ loc }}</span>
                 </sc-for>
                 <sc-if value="{{ p.noLocal }}" hint-placeholder-val="{{ false }}">
                   <span style="color:#46505e;font-size:13px;">—</span>
@@ -321,7 +321,7 @@
 
           <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
             <div style="padding:60px 20px;text-align:center;">
-              <div style="font-size:32px;color:#2c3744;margin-bottom:10px;">⌕</div>
+              <div style="font-size:32px;color:#3a3149;margin-bottom:10px;">⌕</div>
               <div style="font-size:14px;color:#8b97a6;">Nenhum produto encontrado{{ emptySuffix }}</div>
               <div style="font-size:12px;color:#5f6b7a;margin-top:5px;">Tente outro código, descrição ou localização.</div>
             </div>
@@ -331,7 +331,7 @@
             <div style="padding:48px 20px;text-align:center;">
               <div style="font-size:13px;color:#ef5d5d;font-weight:600;margin-bottom:6px;">Não foi possível carregar a planilha</div>
               <div style="font-size:12px;color:#8b97a6;max-width:440px;margin:0 auto;line-height:1.5;">{{ errorMsg }}</div>
-              <button onClick="{{ refresh }}" style="margin-top:16px;background:#161b24;color:#cdd6e1;border:1px solid #2c3744;padding:9px 18px;font-size:12px;cursor:pointer;" style-hover="border-color:#3a4757;color:#fff;">Tentar novamente</button>
+              <button onClick="{{ refresh }}" style="margin-top:16px;background:#1d1827;color:#cdd6e1;border:1px solid #3a3149;padding:9px 18px;font-size:12px;cursor:pointer;" style-hover="border-color:#4a405c;color:#fff;">Tentar novamente</button>
             </div>
           </sc-if>
 
@@ -354,7 +354,7 @@
     <div data-col-pop="1" style="{{ popStyle }}">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
         <span style="font-size:11px;font-weight:600;letter-spacing:1px;color:#cdd6e1;">{{ popTitle }}</span>
-        <button onClick="{{ closePop }}" title="Fechar" style="background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:24px;height:24px;cursor:pointer;font-size:12px;">✕</button>
+        <button onClick="{{ closePop }}" title="Fechar" style="background:#251f31;border:1px solid #3a3149;color:#8b97a6;width:24px;height:24px;cursor:pointer;font-size:12px;">✕</button>
       </div>
       <div style="display:flex;gap:6px;">
         <button onClick="{{ sortAsc }}" style="{{ sortAscStyle }}">{{ sortAscLabel }}</button>
@@ -363,18 +363,18 @@
       <sc-if value="{{ popIsText }}" hint-placeholder-val="{{ false }}">
         <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
           CONTÉM
-          <input value="{{ popTextVal }}" onChange="{{ onPopText }}" autoFocus="autofocus" placeholder="{{ popTextHint }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+          <input value="{{ popTextVal }}" onChange="{{ onPopText }}" autoFocus="autofocus" placeholder="{{ popTextHint }}" style="width:100%;background:#0e0b13;border:1px solid #3a3149;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
         </label>
       </sc-if>
       <sc-if value="{{ popIsNum }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;gap:8px;">
           <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
             MÍNIMO
-            <input type="number" min="0" value="{{ popMin }}" onChange="{{ onPopMin }}" autoFocus="autofocus" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+            <input type="number" min="0" value="{{ popMin }}" onChange="{{ onPopMin }}" autoFocus="autofocus" style="width:100%;background:#0e0b13;border:1px solid #3a3149;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
           </label>
           <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
             MÁXIMO
-            <input type="number" min="0" value="{{ popMax }}" onChange="{{ onPopMax }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+            <input type="number" min="0" value="{{ popMax }}" onChange="{{ onPopMax }}" style="width:100%;background:#0e0b13;border:1px solid #3a3149;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
           </label>
         </div>
       </sc-if>
@@ -382,15 +382,15 @@
         <div style="display:flex;flex-direction:column;gap:8px;">
           <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
             DE
-            <input type="date" value="{{ popFrom }}" onChange="{{ onPopFrom }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+            <input type="date" value="{{ popFrom }}" onChange="{{ onPopFrom }}" style="width:100%;background:#0e0b13;border:1px solid #3a3149;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
           </label>
           <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
             ATÉ
-            <input type="date" value="{{ popTo }}" onChange="{{ onPopTo }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+            <input type="date" value="{{ popTo }}" onChange="{{ onPopTo }}" style="width:100%;background:#0e0b13;border:1px solid #3a3149;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
           </label>
         </div>
       </sc-if>
-      <button onClick="{{ clearPop }}" style="background:transparent;color:#8b97a6;border:1px solid #2c3744;padding:7px;font-size:12px;cursor:pointer;">Limpar esta coluna</button>
+      <button onClick="{{ clearPop }}" style="background:transparent;color:#8b97a6;border:1px solid #3a3149;padding:7px;font-size:12px;cursor:pointer;">Limpar esta coluna</button>
     </div>
   </sc-if>
   </sc-if>
@@ -601,7 +601,7 @@ class Component extends DCLogic {
         initial: p.user.charAt(0).toUpperCase(),
         title: label + (p.active ? " · vendo o site agora" : " · em outra aba ou janela"),
         style: "display:flex;align-items:center;gap:6px;padding:2px 9px 2px 2px;border:1px solid " + c + ";border-radius:14px;font-size:11.5px;font-weight:600;white-space:nowrap;transition:color .25s,border-color .25s;color:" + (p.active ? "#e7edf4" : "#7d8a99") + ";",
-        avatarStyle: "width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:" + (p.active ? "#0a0d12" : "#c3ccd6") + ";transition:background .25s;background:" + c + ";",
+        avatarStyle: "width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:" + (p.active ? "#0e0b13" : "#c3ccd6") + ";transition:background .25s;background:" + c + ";",
       };
     });
     const byUser = {};
@@ -1049,9 +1049,9 @@ class Component extends DCLogic {
     return {
       open: e => this.openCol(col, e),
       mark: sorted === "asc" ? "↑" : sorted === "desc" ? "↓" : "▾",
-      markStyle: "font-size:11px;color:" + (hot ? "#9fc1ff" : "#46505e") + ";",
-      style: "width:100%;background:" + (on ? "#16233f" : "transparent") + ";border:1px solid " + (on ? "#2f6df0" : "transparent") +
-        ";color:" + (hot ? "#9fc1ff" : "#6b7889") + ";padding:5px 6px;font-size:10px;font-weight:600;letter-spacing:1px;font-family:inherit;cursor:pointer;white-space:nowrap;text-align:" + (right ? "right" : "left") + ";",
+      markStyle: "font-size:11px;color:" + (hot ? "#cdbcff" : "#46505e") + ";",
+      style: "width:100%;background:" + (on ? "#251a42" : "transparent") + ";border:1px solid " + (on ? "#8b5cf6" : "transparent") +
+        ";color:" + (hot ? "#cdbcff" : "#6b7889") + ";padding:5px 6px;font-size:10px;font-weight:600;letter-spacing:1px;font-family:inherit;cursor:pointer;white-space:nowrap;text-align:" + (right ? "right" : "left") + ";",
     };
   }
 
@@ -1059,7 +1059,7 @@ class Component extends DCLogic {
     const active = this.state.field === key;
     const base = "border:none;cursor:pointer;padding:9px 14px;font-size:12px;font-weight:600;letter-spacing:.3px;white-space:nowrap;";
     const style = active
-      ? base + "background:#2f6df0;color:#fff;"
+      ? base + "background:#8b5cf6;color:#fff;"
       : base + "background:transparent;color:#8b97a6;";
     return { key, label, style, onClick: () => this.setState({ field: key }) };
   }
@@ -1113,24 +1113,24 @@ class Component extends DCLogic {
       });
     }
 
-    const rowBase = "display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;border-bottom:1px solid #161b24;transition:background .12s;";
+    const rowBase = "display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;border-bottom:1px solid #1d1827;transition:background .12s;";
     const rows = list.map(p => {
       const totalBase = "padding:13px 10px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;letter-spacing:.3px;";
       const sim = simMap.get((p.cod || "").toUpperCase());
       const simNeg = !!(sim && sim.neg);
       const rowBg = simNeg ? "background:rgba(239,93,93,.16);"
-        : sim ? "background:rgba(47,109,240,.08);"
+        : sim ? "background:rgba(139,92,246,.08);"
         : p.dup ? "background:rgba(239,93,93,.12);"
         : p.low ? "background:rgba(243,167,64,.05);" : "";
-      const barColor = simNeg ? "#ef5d5d" : sim ? "#2f6df0" : p.dup ? "#ef5d5d" : p.low ? "#f3a740" : "transparent";
-      const totalColor = simNeg ? "#ef5d5d" : sim ? "#9fc1ff" : p.low ? "#f3a740" : "#eef3f8";
+      const barColor = simNeg ? "#ef5d5d" : sim ? "#8b5cf6" : p.dup ? "#ef5d5d" : p.low ? "#f3a740" : "transparent";
+      const totalColor = simNeg ? "#ef5d5d" : sim ? "#cdbcff" : p.low ? "#f3a740" : "#eef3f8";
       return {
         ...p,
         totalDisp: sim ? p.totalNum.toLocaleString("pt-BR") + " → " + sim.result.toLocaleString("pt-BR") : p.totalDisp,
         rowStyle: rowBase + rowBg,
         barStyle: "align-self:stretch;background:" + barColor + ";",
         totalStyle: totalBase + "color:" + totalColor + ";",
-        codStyle: "padding:13px 10px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.3px;color:" + ((simNeg || p.dup) ? "#ef5d5d" : "#9fc1ff") + ";",
+        codStyle: "padding:13px 10px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.3px;color:" + ((simNeg || p.dup) ? "#ef5d5d" : "#cdbcff") + ";",
       };
     });
 
@@ -1161,10 +1161,10 @@ class Component extends DCLogic {
       updatedAgo = secs < 5 ? "agora mesmo" : secs < 60 ? "há " + secs + "s" : "há " + Math.floor(secs / 60) + " min";
     }
 
-    const lowBase = "display:flex;align-items:center;gap:7px;border:1px solid #2c3744;padding:9px 14px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;white-space:nowrap;";
+    const lowBase = "display:flex;align-items:center;gap:7px;border:1px solid #3a3149;padding:9px 14px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;white-space:nowrap;";
     const lowToggleStyle = s.onlyLow
       ? lowBase + "background:rgba(243,167,64,.12);color:#f3a740;border-color:#7a5a23;"
-      : lowBase + "background:#11151c;color:#8b97a6;";
+      : lowBase + "background:#17131f;color:#8b97a6;";
 
     // ---- janela do filtro por coluna ----
     const pc = s.popCol;
@@ -1176,8 +1176,8 @@ class Component extends DCLogic {
     }[pc] || { title: "", asc: "", desc: "" };
     const sortBtn = dir => {
       const on = s.colSort && s.colSort.key === pc && s.colSort.dir === dir;
-      return "flex:1;padding:8px 6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid " + (on ? "#2f6df0" : "#2c3744") +
-        ";background:" + (on ? "#2f6df0" : "#161b24") + ";color:" + (on ? "#fff" : "#cdd6e1") + ";";
+      return "flex:1;padding:8px 6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid " + (on ? "#8b5cf6" : "#3a3149") +
+        ";background:" + (on ? "#8b5cf6" : "#1d1827") + ";color:" + (on ? "#fff" : "#cdd6e1") + ";";
     };
     const brDate = v => v.split("-").reverse().join("/");
     const colParts = [];
@@ -1201,23 +1201,23 @@ class Component extends DCLogic {
     // ---- painel de baixa: view models ----
     const negList = baixaAll.filter(b => b.neg);
     const nfList = baixaAll.filter(b => !b.found);
-    const itemRowBase = "display:grid;grid-template-columns:100px minmax(180px,1fr) 90px 90px 100px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid #161b24;font-size:12.5px;";
+    const itemRowBase = "display:grid;grid-template-columns:100px minmax(180px,1fr) 90px 90px 100px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid #1d1827;font-size:12.5px;";
     const baixaItems = baixaAll.map(b => ({
       cod: b.cod,
       desc: b.found ? b.desc : "SKU não encontrado na planilha",
       curDisp: b.found ? fmt(b.cur) : "—",
       qtyDisp: (s.baixaMode === "definir" ? "=" : s.baixaMode === "entrada" ? "+" : "−") + fmt(b.qty),
-      qtyStyle: "text-align:right;font-family:'IBM Plex Mono',monospace;color:" + (s.baixaMode === "definir" ? "#7fa5f5" : s.baixaMode === "entrada" ? "#35d49a" : "#f3a740") + ";",
+      qtyStyle: "text-align:right;font-family:'IBM Plex Mono',monospace;color:" + (s.baixaMode === "definir" ? "#b39cf7" : s.baixaMode === "entrada" ? "#35d49a" : "#f3a740") + ";",
       resDisp: b.found ? fmt(b.result) : "—",
       style: itemRowBase + (b.neg ? "background:rgba(239,93,93,.14);" : (!b.found ? "background:rgba(243,167,64,.10);" : "")),
-      codStyle: "font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.3px;color:" + ((b.neg || !b.found) ? "#ef5d5d" : "#9fc1ff") + ";",
+      codStyle: "font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.3px;color:" + ((b.neg || !b.found) ? "#ef5d5d" : "#cdbcff") + ";",
       resStyle: "text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;color:" + (b.neg ? "#ef5d5d" : "#35d49a") + ";",
     }));
 
     const baixaBtnBase = "display:flex;align-items:center;gap:7px;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;white-space:nowrap;border:1px solid;";
     const baixaBtnStyle = s.baixaOpen
-      ? baixaBtnBase + "background:#2f6df0;color:#fff;border-color:#4d82ff;"
-      : baixaBtnBase + "background:#131a2b;color:#7fa5f5;border-color:#2a3d66;";
+      ? baixaBtnBase + "background:#8b5cf6;color:#fff;border-color:#a78bfa;"
+      : baixaBtnBase + "background:#1b1430;color:#b39cf7;border-color:#43306b;";
 
     const modeBase = "border:none;cursor:pointer;padding:8px 14px;font-size:12px;font-weight:600;letter-spacing:.3px;white-space:nowrap;";
     const modeSaidaStyle = s.baixaMode === "saida"
@@ -1227,7 +1227,7 @@ class Component extends DCLogic {
       ? modeBase + "background:#1a5c3f;color:#c6f2dd;"
       : modeBase + "background:transparent;color:#8b97a6;";
     const modeDefinirStyle = s.baixaMode === "definir"
-      ? modeBase + "background:#1c3a6b;color:#bcd4ff;"
+      ? modeBase + "background:#3d2a70;color:#ddd1ff;"
       : modeBase + "background:transparent;color:#8b97a6;";
 
     const approveBase = "display:flex;align-items:center;gap:7px;padding:10px 18px;font-size:12.5px;font-weight:600;letter-spacing:.4px;border:1px solid;";
@@ -1244,7 +1244,7 @@ class Component extends DCLogic {
       ? baixaBtnBase + "background:#b98a2f;color:#1a1408;border-color:#d9a640;"
       : baixaBtnBase + "background:#211c12;color:#e8c27a;border-color:#5a4720;";
     const bkF = (s.bkFilter || "").trim().toLowerCase();
-    const tipoColor = { auto: "#7fa5f5", manual: "#e8c27a", diario: "#35d49a", restauracao: "#ef9a86" };
+    const tipoColor = { auto: "#b39cf7", manual: "#e8c27a", diario: "#35d49a", restauracao: "#ef9a86" };
     const tipoNome = { auto: "ajuste", manual: "manual", diario: "diário", restauracao: "restauração" };
     const bkRows = (s.backups || [])
       .filter(b => !bkF || (b.at + " " + b.desc + " " + b.tipo).toLowerCase().includes(bkF))
@@ -1258,7 +1258,7 @@ class Component extends DCLogic {
       }));
     const bkOk = (s.bkMsg || "").indexOf("✓") === 0;
 
-    const loginBtnBase = "margin-top:4px;padding:11px 16px;font-size:13px;font-weight:600;letter-spacing:.4px;border:1px solid #4d82ff;color:#fff;";
+    const loginBtnBase = "margin-top:4px;padding:11px 16px;font-size:13px;font-weight:600;letter-spacing:.4px;border:1px solid #a78bfa;color:#fff;";
 
     return {
       ...this.presenceView(s),
@@ -1271,7 +1271,7 @@ class Component extends DCLogic {
       submitLogin: e => this.submitLogin(e),
       loginErrShow: !!s.loginErr,
       loginErr: s.loginErr || "",
-      loginBtnStyle: loginBtnBase + (s.loginBusy ? "background:#1d3f8a;cursor:wait;" : "background:#2f6df0;cursor:pointer;"),
+      loginBtnStyle: loginBtnBase + (s.loginBusy ? "background:#4a2f94;cursor:wait;" : "background:#8b5cf6;cursor:pointer;"),
       loginBtnLabel: s.loginBusy ? "Entrando…" : "Entrar",
       logoutBtn: () => this.logout(),
       bkOpen: s.bkOpen,
@@ -1340,7 +1340,7 @@ class Component extends DCLogic {
       colActiveText,
       clearCols: () => this.setState({ colFilter: { cod: "", desc: "", min: "", max: "", from: "", to: "" }, colSort: null }),
       popOpen: !!pc,
-      popStyle: "position:fixed;z-index:51;top:" + s.popY + "px;left:" + s.popX + "px;width:270px;max-height:calc(100vh - " + (s.popY + 12) + "px);overflow:auto;display:flex;flex-direction:column;gap:10px;padding:12px;background:#11151c;border:1px solid #2c3744;border-top:2px solid #2f6df0;box-shadow:0 12px 30px rgba(0,0,0,.55);",
+      popStyle: "position:fixed;z-index:51;top:" + s.popY + "px;left:" + s.popX + "px;width:270px;max-height:calc(100vh - " + (s.popY + 12) + "px);overflow:auto;display:flex;flex-direction:column;gap:10px;padding:12px;background:#17131f;border:1px solid #3a3149;border-top:2px solid #8b5cf6;box-shadow:0 12px 30px rgba(0,0,0,.55);",
       popTitle: popCfg.title,
       closePop: () => this.setState({ popCol: null }),
       clearPop: () => this.clearCol(pc),
