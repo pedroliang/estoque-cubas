@@ -33,7 +33,7 @@ Nova versão → Implantar** (a URL continua a mesma). Salvar sozinho não publi
   cabeçalho: COD., DESCRICAO, TOTAL UN, POR CX, C. FECHADA, C. ABERTA,
   LOCALIZACAO, ATUALIZACAO, VERIFICADO. Sem cabeçalho, vale A..I como no Estoque MKT.
   O site grava só TOTAL UN e ATUALIZACAO.
-- **LOG DE AJUSTES** — histórico de cada SKU alterado (data/hora, lote, modo, antes,
+- **_LOG_AJUSTES_CUBAS** — histórico de cada SKU alterado (data/hora, lote, modo, antes,
   quantidade, depois, status, backup). Se a linha 1 estiver vazia, o script escreve o cabeçalho.
 - **_BACKUPS_CUBAS** (oculta, criada sozinha) — um backup por linha, guarda os últimos 200.
 

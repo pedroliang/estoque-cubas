@@ -9,7 +9,7 @@
 // ===== CONFIG =====
 var CUBAS_ABA_NOME = "ESTOQUE CUBAS";  // aba do estoque (procurada pelo nome)
 var GID_SITE_BAIXA = 355584731;        // e, se o nome mudar, pelo gid
-var CUBAS_LOG_NOME = "LOG DE AJUSTES"; // aba do histórico (já criada por você)
+var CUBAS_LOG_NOME = "_LOG_AJUSTES_CUBAS"; // aba do histórico (já criada por você)
 var MKT_VERSION = 3;
 // Colunas: localizadas pelo cabeçalho (COD. / TOTAL UN / ATUALIZACAO).
 // Se não achar o cabeçalho, usa A, C e H, como no Estoque MKT.
