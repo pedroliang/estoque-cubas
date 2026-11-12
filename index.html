@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ESTOQUE CUBAS</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%232f6df0'/><text x='32' y='45' font-family='monospace' font-size='30' font-weight='700' fill='white' text-anchor='middle'>CB</text></svg>">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:#0a0d12;color:#e3e9f0;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  ::-webkit-scrollbar{width:11px;height:11px}
+  ::-webkit-scrollbar-track{background:#0a0d12}
+  ::-webkit-scrollbar-thumb{background:#283341;border-radius:0;border:3px solid #0a0d12}
+  ::-webkit-scrollbar-thumb:hover{background:#34404f}
+  input{font-family:inherit}
+  @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.82)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes shimmer{0%{background-position:-340px 0}100%{background-position:340px 0}}
+  @keyframes barIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#0a0d12;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:34px 34px;">
+
+  <sc-if value="{{ notAuthed }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;">
+      <form onSubmit="{{ submitLogin }}" style="width:100%;max-width:360px;background:#0d1118;border:1px solid #2c3744;border-top:3px solid #2f6df0;padding:26px 24px;display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:13px;margin-bottom:4px;">
+          <div style="width:38px;height:38px;flex:none;background:linear-gradient(145deg,#2f6df0,#1d4fbf);border:1px solid #4d82ff;display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;color:#fff;letter-spacing:-.5px;">CB</span>
+          </div>
+          <div>
+            <h1 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;letter-spacing:1.5px;color:#f2f6fb;">ESTOQUE CUBAS</h1>
+            <div style="font-size:11px;color:#6b7889;letter-spacing:.3px;margin-top:1px;">Entre para acessar</div>
+          </div>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:1px;color:#8b97a6;">
+          LOGIN
+          <input value="{{ loginUser }}" onChange="{{ onLoginUser }}" autoComplete="username" autoCapitalize="none" spellcheck="false" autoFocus="autofocus" style="width:100%;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:11px 12px;font-size:14px;outline:none;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:1px;color:#8b97a6;">
+          SENHA
+          <input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" autoComplete="current-password" style="width:100%;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:11px 12px;font-size:14px;outline:none;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)" />
+        </label>
+        <sc-if value="{{ loginErrShow }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:12px;line-height:1.5;color:#ef9a9a;">{{ loginErr }}</div>
+        </sc-if>
+        <button type="submit" style="{{ loginBtnStyle }}">{{ loginBtnLabel }}</button>
+      </form>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ authed }}" hint-placeholder-val="{{ true }}">
+  <header style="position:sticky;top:0;z-index:30;background:rgba(11,15,21,.93);backdrop-filter:blur(8px);border-bottom:1px solid #222b37;">
+    <div style="max-width:1280px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 18px;">
+      <div style="display:flex;align-items:center;gap:13px;min-width:0;">
+        <div style="width:38px;height:38px;flex:none;background:linear-gradient(145deg,#2f6df0,#1d4fbf);border:1px solid #4d82ff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px #0a0d12,0 6px 16px rgba(47,109,240,.32);">
+          <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;color:#fff;letter-spacing:-.5px;">CB</span>
+        </div>
+        <div style="min-width:0;">
+          <div style="display:flex;align-items:center;gap:9px;">
+            <h1 style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;letter-spacing:1.5px;color:#f2f6fb;">ESTOQUE CUBAS</h1>
+            <span style="font-size:9.5px;font-weight:600;letter-spacing:1px;color:#7d8a99;border:1px solid #2c3744;padding:2px 6px;">1B</span>
+          </div>
+          <div style="font-size:11px;color:#6b7889;letter-spacing:.3px;margin-top:1px;">Almoxarifado · Cubas</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px 16px;">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+          <sc-for list="{{ people }}" as="w" hint-placeholder-count="1">
+            <div title="{{ w.title }}" style="{{ w.style }}">
+              <span style="{{ w.avatarStyle }}">{{ w.initial }}</span>
+              <span>{{ w.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <sc-if value="{{ live }}" hint-placeholder-val="{{ true }}">
+            <span style="width:8px;height:8px;border-radius:50%;background:#35d49a;box-shadow:0 0 9px #35d49a;animation:pulseDot 1.6s ease-in-out infinite;"></span>
+          </sc-if>
+          <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ef5d5d;box-shadow:0 0 9px #ef5d5d;"></span>
+          </sc-if>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:1.2px;color:#9aa7b6;">{{ liveLabel }}</span>
+        </div>
+        <div style="text-align:right;line-height:1.25;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#cdd6e1;">{{ updatedTime }}</div>
+          <div style="font-size:10px;color:#6b7889;letter-spacing:.3px;">{{ updatedAgo }}</div>
+        </div>
+        <button onClick="{{ refresh }}" style="display:flex;align-items:center;gap:7px;background:#161b24;color:#cdd6e1;border:1px solid #2c3744;padding:8px 13px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="background:#1c232e;border-color:#3a4757;color:#fff;">
+          <span style="{{ spinStyle }}">⟳</span> Atualizar
+        </button>
+        <button onClick="{{ logoutBtn }}" title="Sair do site" style="background:transparent;color:#8b97a6;border:1px solid #2c3744;padding:8px 11px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="border-color:#3a4757;color:#fff;">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:1280px;margin:0 auto;padding:24px;">
+
+    <sc-for list="{{ sharedAlerts }}" as="a" hint-placeholder-count="0">
+      <div style="background:rgba(243,167,64,.1);border:1px solid #7a5a23;border-left:3px solid #f3a740;padding:10px 14px;margin-bottom:12px;font-size:12.5px;line-height:1.5;color:#f3c98a;">
+        <strong style="color:#f3a740;">⚠ {{ a.title }}</strong> {{ a.detail }}
+      </div>
+    </sc-for>
+
+    <section style="display:flex;gap:12px;flex-wrap:wrap;align-items:stretch;margin-bottom:18px;">
+      <div style="flex:1;min-width:280px;position:relative;display:flex;align-items:center;">
+        <span style="position:absolute;left:15px;color:#5f6b7a;font-size:16px;pointer-events:none;">⌕</span>
+        <input value="{{ query }}" onChange="{{ onSearch }}" placeholder="Buscar por código, descrição ou localização…" style="width:100%;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:13px 14px 13px 42px;font-size:14px;outline:none;letter-spacing:.2px;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)" />
+        <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ clearQuery }}" style="position:absolute;right:10px;background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;" style-hover="color:#fff;border-color:#3a4757;">✕</button>
+        </sc-if>
+      </div>
+      <div style="display:flex;background:#11151c;border:1px solid #2c3744;padding:3px;gap:2px;">
+        <sc-for list="{{ fields }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+        </sc-for>
+      </div>
+      <button onClick="{{ toggleLow }}" style="{{ lowToggleStyle }}">
+        <span style="font-size:13px;">▲</span> Só estoque baixo
+      </button>
+      <button onClick="{{ exportExcel }}" title="Exportar todos os itens para Excel" style="display:flex;align-items:center;gap:7px;background:#11211a;color:#46c08a;border:1px solid #245741;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;white-space:nowrap;" style-hover="background:#173026;border-color:#2f7556;color:#5fd6a0;">
+        <span style="font-size:13px;">▤</span> Excel
+      </button>
+      <button onClick="{{ exportPdf }}" title="Exportar todos os itens para PDF" style="display:flex;align-items:center;gap:7px;background:#211414;color:#e0816f;border:1px solid #5a2e26;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;white-space:nowrap;" style-hover="background:#2c1a17;border-color:#7a3d32;color:#ef9a86;">
+        <span style="font-size:13px;">▦</span> PDF
+      </button>
+      <button onClick="{{ toggleBaixa }}" title="Dar baixa no estoque colando SKU e quantidade" style="{{ baixaBtnStyle }}">
+        <span style="font-size:13px;">⇅</span> Ajuste
+      </button>
+      <button onClick="{{ toggleBk }}" title="Backups: restaurar o estoque para um momento anterior" style="{{ bkBtnStyle }}">
+        <span style="font-size:13px;">⟲</span> Backups
+      </button>
+    </section>
+
+    <sc-if value="{{ bkOpen }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#0d1118;border:1px solid #2c3744;border-left:3px solid #b98a2f;margin-bottom:18px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #1c232e;">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:1.2px;color:#f2f6fb;">BACKUPS DO ESTOQUE</div>
+            <div style="font-size:11.5px;color:#6b7889;margin-top:3px;line-height:1.5;">Um backup é criado automaticamente ANTES de cada ajuste. "Desfazer ajuste" volta só os SKUs daquele ajuste · "Restaurar tudo" volta a aba inteira (TOTAL UN e ATUALIZAÇÃO) para aquele momento. Antes de restaurar, o estado atual também é salvo.</div>
+          </div>
+          <button onClick="{{ toggleBk }}" style="background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;flex:none;" style-hover="color:#fff;border-color:#3a4757;">✕</button>
+        </div>
+        <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button onClick="{{ backupNow }}" style="background:#2a2414;color:#e8c27a;border:1px solid #6b5426;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;" style-hover="border-color:#8a6c31;color:#ffd892;">＋ Criar backup agora</button>
+            <button onClick="{{ reloadBk }}" style="background:#161b24;color:#8b97a6;border:1px solid #2c3744;padding:9px 14px;font-size:12px;cursor:pointer;" style-hover="color:#fff;border-color:#3a4757;">⟳ Atualizar lista</button>
+            <input value="{{ bkFilter }}" onChange="{{ onBkFilter }}" placeholder="Filtrar por data (ex.: 07/10)" style="background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;width:200px;" style-focus="border-color:#b98a2f" />
+            <sc-if value="{{ bkMsgShow }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ bkMsgStyle }}">{{ bkMsg }}</span>
+            </sc-if>
+          </div>
+          <div style="border:1px solid #1c232e;max-height:420px;overflow-y:auto;">
+            <div style="display:grid;grid-template-columns:150px 90px minmax(200px,1fr) 60px 270px;gap:8px;padding:9px 12px;background:#12161e;border-bottom:1px solid #222b37;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;position:sticky;top:0;">
+              <div>DATA/HORA</div><div>TIPO</div><div>DESCRIÇÃO</div><div style="text-align:right;">SKUS</div><div style="text-align:right;">AÇÃO</div>
+            </div>
+            <sc-for list="{{ bkRows }}" as="k" hint-placeholder-count="0">
+              <div style="display:grid;grid-template-columns:150px 90px minmax(200px,1fr) 60px 270px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid #161b24;font-size:12.5px;">
+                <div style="font-family:'IBM Plex Mono',monospace;color:#cdd6e1;">{{ k.at }}</div>
+                <div style="{{ k.tipoStyle }}">{{ k.tipo }}</div>
+                <div style="color:#aeb9c6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="{{ k.desc }}">{{ k.desc }}</div>
+                <div style="text-align:right;font-family:'IBM Plex Mono',monospace;color:#8b97a6;">{{ k.itens }}</div>
+                <div style="display:flex;justify-content:flex-end;gap:6px;">
+                  <sc-if value="{{ k.hasLote }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ k.undo }}" style="background:#131a2b;color:#7fa5f5;border:1px solid #2a3d66;padding:6px 10px;font-size:11.5px;font-weight:600;cursor:pointer;" style-hover="border-color:#4d82ff;color:#bcd4ff;">↶ Desfazer ajuste</button>
+                  </sc-if>
+                  <button onClick="{{ k.restore }}" style="background:#2a1818;color:#ef9a86;border:1px solid #5a2e26;padding:6px 10px;font-size:11.5px;font-weight:600;cursor:pointer;" style-hover="border-color:#7a3d32;color:#ffb3a1;">⟲ Restaurar tudo</button>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ bkEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:22px;text-align:center;font-size:12px;color:#6b7889;">{{ bkEmptyText }}</div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ baixaOpen }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#0d1118;border:1px solid #2c3744;border-left:3px solid #2f6df0;margin-bottom:18px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #1c232e;">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:1.2px;color:#f2f6fb;">{{ baixaTitle }}</div>
+            <div style="font-size:11.5px;color:#6b7889;margin-top:3px;line-height:1.5;">{{ baixaHint }}</div>
+          </div>
+          <button onClick="{{ toggleBaixa }}" style="background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;flex:none;" style-hover="color:#fff;border-color:#3a4757;">✕</button>
+        </div>
+        <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:2px;background:#11151c;border:1px solid #2c3744;padding:3px;align-self:flex-start;">
+            <button onClick="{{ modeSaida }}" style="{{ modeSaidaStyle }}">− Baixa (subtrair)</button>
+            <button onClick="{{ modeEntrada }}" style="{{ modeEntradaStyle }}">+ Entrada (somar)</button>
+            <button onClick="{{ modeDefinir }}" style="{{ modeDefinirStyle }}">= Definir (valor final)</button>
+          </div>
+          <textarea value="{{ baixaText }}" onChange="{{ onBaixaText }}" spellcheck="false" placeholder="Cole aqui, ex.:&#10;A102&#9;10&#10;B205&#9;4" style="width:100%;min-height:110px;resize:vertical;background:#11151c;border:1px solid #2c3744;color:#e7edf4;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6;outline:none;" style-focus="border-color:#2f6df0;box-shadow:0 0 0 3px rgba(47,109,240,.15)"></textarea>
+
+          <sc-if value="{{ hasBaixaItems }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:11.5px;color:#8b97a6;letter-spacing:.3px;">{{ baixaSummary }}</div>
+
+            <sc-if value="{{ baixaHasNeg }}" hint-placeholder-val="{{ false }}">
+              <div style="background:rgba(239,93,93,.12);border:1px solid #5a2626;border-left:3px solid #ef5d5d;padding:10px 14px;font-size:12px;color:#ef9a9a;line-height:1.6;">
+                <strong style="color:#ef5d5d;">SKUs que ficarão NEGATIVOS:</strong> {{ baixaNegText }}
+              </div>
+            </sc-if>
+
+            <div style="border:1px solid #1c232e;">
+              <div style="display:grid;grid-template-columns:100px minmax(180px,1fr) 90px 90px 100px;gap:8px;padding:9px 12px;background:#12161e;border-bottom:1px solid #222b37;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;">
+                <div>SKU</div><div>DESCRIÇÃO</div><div style="text-align:right;">ATUAL</div><div style="text-align:right;">{{ qtyColLabel }}</div><div style="text-align:right;">RESULTADO</div>
+              </div>
+              <sc-for list="{{ baixaItems }}" as="b" hint-placeholder-count="0">
+                <div style="{{ b.style }}">
+                  <div style="{{ b.codStyle }}">{{ b.cod }}</div>
+                  <div style="color:#aeb9c6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ b.desc }}</div>
+                  <div style="text-align:right;font-family:'IBM Plex Mono',monospace;color:#aeb9c6;">{{ b.curDisp }}</div>
+                  <div style="{{ b.qtyStyle }}">{{ b.qtyDisp }}</div>
+                  <div style="{{ b.resStyle }}">{{ b.resDisp }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <button onClick="{{ approveBaixa }}" style="{{ approveStyle }}">✓ {{ approveLabel }}</button>
+              <button onClick="{{ clearBaixa }}" style="background:#161b24;color:#8b97a6;border:1px solid #2c3744;padding:10px 16px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;" style-hover="color:#fff;border-color:#3a4757;">Limpar simulação</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ applyAreaShow }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <sc-if value="{{ applyMsgShow }}" hint-placeholder-val="{{ false }}">
+                  <span style="{{ applyMsgStyle }}">{{ applyMsg }}</span>
+                </sc-if>
+                <sc-if value="{{ canUndoLast }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ undoLast }}" style="background:#131a2b;color:#7fa5f5;border:1px solid #2a3d66;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;" style-hover="border-color:#4d82ff;color:#bcd4ff;">↶ Desfazer este ajuste</button>
+                </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <section style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;">
+      <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="4">
+        <div style="background:#11151c;border:1px solid #222b37;border-left:3px solid #2c3744;padding:14px 16px;">
+          <div style="font-size:10.5px;font-weight:600;letter-spacing:1.2px;color:#6b7889;text-transform:uppercase;">{{ t.label }}</div>
+          <div style="{{ t.numStyle }}">{{ t.value }}</div>
+          <div style="font-size:11px;color:#5f6b7a;margin-top:2px;">{{ t.sub }}</div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section style="background:#0d1118;border:1px solid #222b37;">
+      <sc-if value="{{ colActive }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 12px;background:#101a2e;border-bottom:1px solid #223557;font-size:12px;color:#9fc1ff;">
+          <span>{{ colActiveText }}</span>
+          <button onClick="{{ clearCols }}" style="background:#161b24;color:#cdd6e1;border:1px solid #2c3744;padding:5px 11px;font-size:11.5px;font-weight:600;cursor:pointer;">Limpar filtros</button>
+        </div>
+      </sc-if>
+      <div style="overflow-x:auto;">
+        <div style="min-width:960px;">
+
+          <div style="display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;align-items:center;background:#12161e;border-bottom:1px solid #222b37;">
+            <div></div>
+            <div style="padding:5px 4px;"><button onClick="{{ hCod.open }}" title="Filtrar e ordenar" style="{{ hCod.style }}">COD. <span style="{{ hCod.markStyle }}">{{ hCod.mark }}</span></button></div>
+            <div style="padding:5px 4px;"><button onClick="{{ hDesc.open }}" title="Filtrar e ordenar" style="{{ hDesc.style }}">DESCRIÇÃO <span style="{{ hDesc.markStyle }}">{{ hDesc.mark }}</span></button></div>
+            <div style="padding:5px 4px;text-align:right;"><button onClick="{{ hTotal.open }}" title="Filtrar e ordenar" style="{{ hTotal.style }}">TOTAL UN <span style="{{ hTotal.markStyle }}">{{ hTotal.mark }}</span></button></div>
+            <div style="padding:11px 10px;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;text-align:right;">P/ CX</div>
+            <div style="padding:11px 10px;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;text-align:right;">C. FECH.</div>
+            <div style="padding:11px 10px;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;text-align:right;">C. ABERTA</div>
+            <div style="padding:11px 10px;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;">LOCALIZAÇÃO</div>
+            <div style="padding:5px 4px;"><button onClick="{{ hDate.open }}" title="Filtrar e ordenar" style="{{ hDate.style }}">ATUALIZAÇÃO <span style="{{ hDate.markStyle }}">{{ hDate.mark }}</span></button></div>
+            <div style="padding:11px 10px;font-size:10px;font-weight:600;letter-spacing:1px;color:#6b7889;text-align:center;">VER.</div>
+          </div>
+
+          <sc-for list="{{ skeleton }}" as="s" hint-placeholder-count="0">
+            <div style="display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;border-bottom:1px solid #161b24;">
+              <div></div>
+              <div style="padding:14px 10px;"><div style="height:13px;width:48px;background:linear-gradient(90deg,#161b24,#1e2531,#161b24);background-size:340px 100%;animation:shimmer 1.3s infinite;"></div></div>
+              <div style="padding:14px 10px;"><div style="height:13px;width:75%;background:linear-gradient(90deg,#161b24,#1e2531,#161b24);background-size:340px 100%;animation:shimmer 1.3s infinite;"></div></div>
+              <div style="padding:14px 10px;"></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </sc-for>
+
+          <sc-for list="{{ rows }}" as="p" hint-placeholder-count="0">
+            <div style="{{ p.rowStyle }}" style-hover="background:#141a23;">
+              <div style="{{ p.barStyle }}"></div>
+              <div style="{{ p.codStyle }}">{{ p.cod }}</div>
+              <div style="padding:13px 10px;font-size:13px;color:#dbe3ec;line-height:1.4;text-wrap:pretty;">{{ p.desc }}</div>
+              <div style="{{ p.totalStyle }}">{{ p.totalDisp }}</div>
+              <div style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#8b97a6;">{{ p.porCx }}</div>
+              <div style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#aeb9c6;">{{ p.cFechada }}</div>
+              <div style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#aeb9c6;">{{ p.cAberta }}</div>
+              <div style="padding:13px 10px;display:flex;flex-wrap:wrap;gap:4px;">
+                <sc-for list="{{ p.locals }}" as="loc" hint-placeholder-count="0">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#cdd6e1;background:#1b222d;border:1px solid #2c3744;padding:2px 7px;letter-spacing:.5px;">{{ loc }}</span>
+                </sc-for>
+                <sc-if value="{{ p.noLocal }}" hint-placeholder-val="{{ false }}">
+                  <span style="color:#46505e;font-size:13px;">—</span>
+                </sc-if>
+              </div>
+              <div style="padding:13px 10px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8b97a6;">{{ p.atualizacao }}</div>
+              <div style="padding:13px 10px;display:flex;justify-content:center;">
+                <sc-if value="{{ p.verified }}" hint-placeholder-val="{{ false }}">
+                  <span style="color:#35d49a;font-size:14px;">✓</span>
+                </sc-if>
+                <sc-if value="{{ p.notVerified }}" hint-placeholder-val="{{ true }}">
+                  <span style="color:#46505e;font-size:13px;">·</span>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+
+          <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:60px 20px;text-align:center;">
+              <div style="font-size:32px;color:#2c3744;margin-bottom:10px;">⌕</div>
+              <div style="font-size:14px;color:#8b97a6;">Nenhum produto encontrado{{ emptySuffix }}</div>
+              <div style="font-size:12px;color:#5f6b7a;margin-top:5px;">Tente outro código, descrição ou localização.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:48px 20px;text-align:center;">
+              <div style="font-size:13px;color:#ef5d5d;font-weight:600;margin-bottom:6px;">Não foi possível carregar a planilha</div>
+              <div style="font-size:12px;color:#8b97a6;max-width:440px;margin:0 auto;line-height:1.5;">{{ errorMsg }}</div>
+              <button onClick="{{ refresh }}" style="margin-top:16px;background:#161b24;color:#cdd6e1;border:1px solid #2c3744;padding:9px 18px;font-size:12px;cursor:pointer;" style-hover="border-color:#3a4757;color:#fff;">Tentar novamente</button>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </section>
+
+    <footer style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:14px 4px 4px;font-size:11.5px;color:#5f6b7a;">
+      <div>{{ resultText }}</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span style="width:5px;height:5px;background:#35d49a;border-radius:50%;"></span>
+        Sincroniza automaticamente a cada 60s · Estoque baixo abaixo de {{ threshold }} un.
+      </div>
+    </footer>
+
+  </main>
+
+  <sc-if value="{{ popOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePop }}" style="position:fixed;inset:0;z-index:50;"></div>
+    <div data-col-pop="1" style="{{ popStyle }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:1px;color:#cdd6e1;">{{ popTitle }}</span>
+        <button onClick="{{ closePop }}" title="Fechar" style="background:#1c232e;border:1px solid #2c3744;color:#8b97a6;width:24px;height:24px;cursor:pointer;font-size:12px;">✕</button>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button onClick="{{ sortAsc }}" style="{{ sortAscStyle }}">{{ sortAscLabel }}</button>
+        <button onClick="{{ sortDesc }}" style="{{ sortDescStyle }}">{{ sortDescLabel }}</button>
+      </div>
+      <sc-if value="{{ popIsText }}" hint-placeholder-val="{{ false }}">
+        <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
+          CONTÉM
+          <input value="{{ popTextVal }}" onChange="{{ onPopText }}" autoFocus="autofocus" placeholder="{{ popTextHint }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+        </label>
+      </sc-if>
+      <sc-if value="{{ popIsNum }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:8px;">
+          <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
+            MÍNIMO
+            <input type="number" min="0" value="{{ popMin }}" onChange="{{ onPopMin }}" autoFocus="autofocus" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
+            MÁXIMO
+            <input type="number" min="0" value="{{ popMax }}" onChange="{{ onPopMax }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+          </label>
+        </div>
+      </sc-if>
+      <sc-if value="{{ popIsDate }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
+            DE
+            <input type="date" value="{{ popFrom }}" onChange="{{ onPopFrom }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.8px;color:#8b97a6;">
+            ATÉ
+            <input type="date" value="{{ popTo }}" onChange="{{ onPopTo }}" style="width:100%;background:#0a0d12;border:1px solid #2c3744;color:#e3e9f0;padding:8px 9px;font-size:13px;outline:none;color-scheme:dark;">
+          </label>
+        </div>
+      </sc-if>
+      <button onClick="{{ clearPop }}" style="background:transparent;color:#8b97a6;border:1px solid #2c3744;padding:7px;font-size:12px;cursor:pointer;">Limpar esta coluna</button>
+    </div>
+  </sc-if>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:820}}">
+class Component extends DCLogic {
+  state = {
+    raw: [],
+    query: "",
+    field: "todos",
+    onlyLow: false,
+    // Filtros e ordenação por coluna (os cartões de totais continuam mostrando tudo).
+    colFilter: { cod: "", desc: "", min: "", max: "", from: "", to: "" },
+    colSort: null,
+    popCol: null,
+    popX: 0,
+    popY: 0,
+    threshold: 50,
+    loading: true,
+    error: null,
+    lastUpdated: null,
+    refreshing: false,
+    tick: 0,
+    baixaOpen: false,
+    baixaMode: "saida",
+    baixaText: "",
+    applying: false,
+    applyMsg: null,
+    lastUndo: null,
+    bkOpen: false,
+    backups: [],
+    bkLoading: false,
+    bkBusy: false,
+    bkMsg: null,
+    bkFilter: "",
+    auth: this.readAuth(),
+    loginUser: "",
+    loginPass: "",
+    loginBusy: false,
+    loginErr: null,
+    sessions: [],
+    visible: document.visibilityState !== "hidden",
+  };
+
+
+
+
+  SHEET = "1eMEkO2BB42c-SVb0NRhgFoC7dPgW6005Ra0mNZ_e7Y4";
+  GID = "355584731"; // aba ESTOQUE CUBAS
+  // URL do Web App do Google Apps Script — necessária para o botão "Aprovar mudanças"
+  // gravar na planilha. Veja o passo a passo em apps-script-instrucoes.md.
+  SCRIPT_URL = "COLE_AQUI_A_URL_DO_WEB_APP";
+
+  // Sinal de presença a cada 15s; o Apps Script tira da lista quem some por 90s.
+  PRESENCE_MS = 15000;
+  // Cada aba tem seu id; o id do navegador faz várias abas contarem como uma pessoa.
+  tabId = Math.random().toString(36).slice(2, 12);
+
+  componentDidMount() {
+    this._onVisibility = () => {
+      const visible = document.visibilityState !== "hidden";
+      this.setState({ visible });
+      // Ao fechar a aba ela também fica oculta. Esperar um pouco evita que este
+      // sinal chegue depois do aviso de saída e recoloque a pessoa na lista.
+      clearTimeout(this._hideTimer);
+      if (visible) this.heartbeat();
+      else this._hideTimer = setTimeout(() => this.heartbeat(), 1500);
+    };
+    this._onPageHide = () => this.sendLeave();
+    document.addEventListener("visibilitychange", this._onVisibility);
+    window.addEventListener("pagehide", this._onPageHide);
+    this._onPopKey = e => { if (e.key === "Escape" && this.state.popCol) this.setState({ popCol: null }); };
+    // A janela do filtro fica presa ao cabeçalho: se a tela rolar, ela fecha.
+    this._onPopScroll = e => {
+      if (!this.state.popCol) return;
+      if (e.target && e.target.closest && e.target.closest("[data-col-pop]")) return;
+      this.setState({ popCol: null });
+    };
+    document.addEventListener("keydown", this._onPopKey);
+    window.addEventListener("scroll", this._onPopScroll, true);
+    window.addEventListener("resize", this._onPopScroll);
+    if (this.state.auth) this.startApp();
+  }
+  componentWillUnmount() {
+    this.stopApp();
+    clearTimeout(this._hideTimer);
+    document.removeEventListener("visibilitychange", this._onVisibility);
+    window.removeEventListener("pagehide", this._onPageHide);
+    document.removeEventListener("keydown", this._onPopKey);
+    window.removeEventListener("scroll", this._onPopScroll, true);
+    window.removeEventListener("resize", this._onPopScroll);
+    clearTimeout(this._pctTimer);
+  }
+  startApp() {
+    this.stopApp();
+    this.load();
+    this.heartbeat();
+    this._poll = setInterval(() => this.load(true), 60000);
+    this._tick = setInterval(() => this.setState(s => ({ tick: s.tick + 1 })), 1000);
+    this._beat = setInterval(() => this.heartbeat(), this.PRESENCE_MS);
+  }
+  stopApp() {
+    clearInterval(this._poll);
+    clearInterval(this._tick);
+    clearInterval(this._beat);
+  }
+
+  // ---- login e presença ----
+  readAuth() {
+    try {
+      const a = JSON.parse(localStorage.getItem("estoqueCubas.auth"));
+      if (a && a.user && a.token) return a;
+    } catch (e) {}
+    return null;
+  }
+  token() { return this.state.auth ? this.state.auth.token : ""; }
+  deviceId() {
+    if (this._dev) return this._dev;
+    try { this._dev = localStorage.getItem("estoqueCubas.device"); } catch (e) {}
+    if (!this._dev) {
+      this._dev = "D" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+      try { localStorage.setItem("estoqueCubas.device", this._dev); } catch (e) {}
+    }
+    return this._dev;
+  }
+  presenceBody(extra) {
+    return JSON.stringify({ action: "presence", token: this.token(), dev: this.deviceId(), tab: this.tabId, ...extra });
+  }
+
+  // O Apps Script compara a senha exata. Para aceitar maiúsculas ou minúsculas,
+  // o site testa as formas de escrita usadas nas senhas: adm, Silvia, userFL.
+  passVariants(pass) {
+    const low = pass.toLowerCase();
+    const list = [pass, low, low.charAt(0).toUpperCase() + low.slice(1)];
+    if (low.indexOf("user") === 0) list.push("user" + low.slice(4).toUpperCase());
+    return [...new Set(list)];
+  }
+
+  async submitLogin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (this.state.loginBusy) return;
+    const user = this.state.loginUser.trim(), pass = this.state.loginPass;
+    if (!user || !pass) { this.setState({ loginErr: "Preencha login e senha." }); return; }
+    if (!/^https:\/\/script\.google\.com\//.test(this.SCRIPT_URL)) { this.setState({ loginErr: "Apps Script ainda não configurado: falta colar a URL do Web App no index.html (SCRIPT_URL)." }); return; }
+    this.setState({ loginBusy: true, loginErr: null });
+    try {
+      const tries = await Promise.all(this.passVariants(pass).map(p =>
+        this.postScript(JSON.stringify({ action: "login", user, pass: p }))));
+      const out = tries.find(t => t && t.ok) || tries[0];
+      if (out && out.ok) {
+        const auth = { user: out.user, token: out.token };
+        try { localStorage.setItem("estoqueCubas.auth", JSON.stringify(auth)); } catch (e2) {}
+        this.setState({ auth, loginBusy: false, loginPass: "", loginUser: "", loginErr: null }, () => this.startApp());
+        return;
+      }
+      const err = (out && out.error) || "";
+      this.setState({ loginBusy: false, loginErr: /acao desconhecida/.test(err)
+        ? "O Apps Script ainda não foi atualizado (veja apps-script-instrucoes.md)."
+        : (err || "Resposta inválida do Apps Script.") });
+    } catch (e3) {
+      this.setState({ loginBusy: false, loginErr: "Não foi possível conectar: " + (e3 && e3.message ? e3.message : e3) });
+    }
+  }
+
+  logout(msg) {
+    this.sendLeave();
+    this.stopApp();
+    try { localStorage.removeItem("estoqueCubas.auth"); } catch (e) {}
+    this.setState({ auth: null, raw: [], sessions: [], loading: true, colFilter: { cod: "", desc: "", min: "", max: "", from: "", to: "" }, colSort: null, popCol: null, baixaOpen: false, baixaText: "", bkOpen: false, backups: [], loginErr: msg || null });
+  }
+
+  async heartbeat() {
+    if (!this.state.auth || !this.SCRIPT_URL) return;
+    const seq = this._beatSeq = (this._beatSeq || 0) + 1;
+    try {
+      const out = await this.postScript(this.presenceBody({ active: document.visibilityState !== "hidden" }));
+      // ignora resposta atrasada de um sinal mais antigo, ou que chegou depois de sair
+      if (seq !== this._beatSeq || !this.state.auth) return;
+      if (out && out.ok) this.setState({ sessions: out.sessions || [] });
+      else if (out && /sessao expirada/.test(out.error || "")) this.logout("Sua sessão expirou. Entre de novo.");
+    } catch (e) { /* falha de rede: tenta de novo no próximo sinal */ }
+  }
+
+  // Ao fechar a aba: avisa sem esperar resposta. Se falhar, os 90s resolvem.
+  sendLeave() {
+    if (!this.state.auth) return;
+    // keepalive mantém o envio com a aba fechando; sem cookies, como os demais sinais
+    fetch(this.SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: this.presenceBody({ leave: true }),
+      keepalive: true,
+      credentials: "omit",
+    }).catch(() => {});
+  }
+
+  presenceView(s) {
+    const me = this.deviceId();
+    const others = (s.sessions || []).filter(x => x.dev !== me);
+    const all = s.auth ? [{ dev: me, user: s.auth.user, active: s.visible, me: true }, ...others] : [];
+    const colors = { user64: "#14b88a", adm: "#f0883e", Silvia: "#ec6fa8", Givaldo: "#4d9df0", userFL: "#b48cf2", userDF: "#e3c54f" };
+    const people = all.map(p => {
+      const c = p.active ? (colors[p.user] || "#7c8cf0") : "#566170"; // cinza: fora da tela
+      const label = p.user + (p.me ? " (você)" : "");
+      return {
+        label,
+        initial: p.user.charAt(0).toUpperCase(),
+        title: label + (p.active ? " · vendo o site agora" : " · em outra aba ou janela"),
+        style: "display:flex;align-items:center;gap:6px;padding:2px 9px 2px 2px;border:1px solid " + c + ";border-radius:14px;font-size:11.5px;font-weight:600;white-space:nowrap;transition:color .25s,border-color .25s;color:" + (p.active ? "#e7edf4" : "#7d8a99") + ";",
+        avatarStyle: "width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:" + (p.active ? "#0a0d12" : "#c3ccd6") + ";transition:background .25s;background:" + c + ";",
+      };
+    });
+    const byUser = {};
+    all.forEach(p => { (byUser[p.user] = byUser[p.user] || []).push(p); });
+    const sharedAlerts = Object.keys(byUser).filter(u => byUser[u].length > 1).map(u => {
+      const on = byUser[u].filter(p => p.active).length, away = byUser[u].length - on;
+      return {
+        title: "O login " + u + " está em uso em " + byUser[u].length + " dispositivos ao mesmo tempo.",
+        detail: on + " vendo o site · " + away + " em outra aba ou janela",
+      };
+    });
+    return { people, sharedAlerts };
+  }
+
+  cell(c) {
+    if (!c) return "";
+    if (c.f != null && c.f !== "") return String(c.f);
+    if (c.v != null) return String(c.v);
+    return "";
+  }
+  toNum(str) {
+    const d = String(str == null ? "" : str).replace(/[^\d]/g, "");
+    return d ? parseInt(d, 10) : 0;
+  }
+
+  // Interpreta o texto colado (Ctrl+V): uma linha por item, SKU + quantidade,
+  // separados por tab (Excel/Sheets), ";", "," ou espaços. Soma SKUs repetidos
+  // e cruza com o estoque atual para calcular o saldo resultante.
+  computeBaixa(s) {
+    const map = new Map();
+    const items = [];
+    for (const rawLine of String(s.baixaText || "").split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line) continue;
+      let parts;
+      if (line.includes("\t")) parts = line.split("\t");
+      else if (line.includes(";")) parts = line.split(";");
+      else if (line.includes(",")) parts = line.split(",");
+      else parts = line.split(/\s+/);
+      parts = parts.map(x => x.trim()).filter(Boolean);
+      if (parts.length < 2) continue;
+      const cod = parts[0];
+      const qtyStr = parts[parts.length - 1];
+      if (!/\d/.test(qtyStr)) continue; // cabeçalho ou linha inválida
+      const qty = this.toNum(qtyStr);
+      const key = cod.toUpperCase();
+      if (map.has(key)) map.get(key).qty += qty;
+      else { const it = { cod, qty }; map.set(key, it); items.push(it); }
+    }
+    const byCod = new Map();
+    s.raw.forEach(p => {
+      const k = (p.cod || "").toUpperCase();
+      if (k && k !== "—" && !byCod.has(k)) byCod.set(k, p);
+    });
+    return items.map(it => {
+      const p = byCod.get(it.cod.toUpperCase());
+      if (!p) return { ...it, found: false, desc: "", cur: null, result: null, neg: false };
+      const result = s.baixaMode === "definir" ? it.qty
+        : s.baixaMode === "entrada" ? p.totalNum + it.qty
+        : p.totalNum - it.qty;
+      return { ...it, found: true, desc: p.desc, cur: p.totalNum, result, neg: result < 0 };
+    });
+  }
+
+  async approveBaixa(items) {
+    if (!this.SCRIPT_URL) {
+      alert("Para gravar na planilha, configure a SCRIPT_URL no topo do código.\n\nSiga o passo a passo do arquivo apps-script-instrucoes.md (publicar o Apps Script como Web App e colar a URL gerada).");
+      return;
+    }
+    if (this.state.applying) return;
+    const mode = this.state.baixaMode;
+    const isDefinir = mode === "definir";
+    const apply = items.filter(i => i.found && (isDefinir ? i.qty >= 0 : i.qty > 0) && !i.neg);
+    const skippedNeg = items.filter(i => i.found && i.neg);
+    const skippedNf = items.filter(i => !i.found);
+    if (!apply.length) {
+      alert("Nenhum SKU válido para aplicar." +
+        (skippedNeg.length ? "\n\nFicariam negativos (ignorados): " + skippedNeg.map(x => x.cod).join(", ") : "") +
+        (skippedNf.length ? "\n\nNão encontrados: " + skippedNf.map(x => x.cod).join(", ") : ""));
+      return;
+    }
+    const parts = [];
+    if (skippedNeg.length) parts.push(skippedNeg.length + " SKU(s) serão IGNORADOS por saldo insuficiente: " + skippedNeg.map(x => x.cod).join(", "));
+    if (skippedNf.length) parts.push(skippedNf.length + " SKU(s) não encontrados serão ignorados: " + skippedNf.map(x => x.cod).join(", "));
+    const acao = isDefinir ? "DEFINIR (=)" : mode === "entrada" ? "ENTRADA (+)" : "BAIXA (−)";
+    // Mesmo texto + mesmo modo de uma tentativa que falhou → reaproveita o MESMO
+    // lote: o Apps Script reconhece e NUNCA aplica duas vezes.
+    const sig = mode + "|" + this.state.baixaText;
+    const retrying = this._pending && this._pending.sig === sig;
+    const msg = (retrying ? "Reenviando o MESMO lote da tentativa anterior (se já foi gravado, não grava de novo).\n\n" : "") +
+      "Aplicar " + acao + " em " + apply.length + " SKU(s)?\n\nUm backup da aba é criado antes, automaticamente." +
+      (parts.length ? "\n\n" + parts.join("\n\n") : "");
+    if (!confirm(msg)) return;
+    if (!retrying) this._pending = { sig, batchId: "L" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7) };
+    const batchId = this._pending.batchId;
+    this.setState({ applying: true, applyMsg: "Gravando na planilha…", lastUndo: null });
+    try {
+      const out = await this.sendBatch({
+        action: "apply",
+        batchId,
+        mode,
+        // envia a QUANTIDADE (não o total calculado aqui): o Apps Script calcula
+        // em cima do valor atual da planilha, dentro de um lock.
+        items: apply.map(i => ({ cod: i.cod, qty: i.qty })),
+      });
+      this._pending = null;
+      const n = (out.updated || []).length;
+      const extra = [];
+      if (out.duplicate) extra.push("este lote já tinha sido gravado — não foi aplicado de novo");
+      const neg = (out.skipped || []).map(x => x.cod).concat(skippedNeg.map(x => x.cod));
+      if (neg.length) extra.push(neg.length + " ignorado(s) por saldo insuficiente: " + neg.join(", "));
+      const nf = (out.notFound || []).concat(skippedNf.map(x => x.cod));
+      if (nf.length) extra.push(nf.length + " não encontrado(s): " + nf.join(", "));
+      const bad = out.mismatch || [];
+      const head = bad.length
+        ? "⚠ " + n + " SKU(s) enviados, mas " + bad.length + " não conferiram na planilha: " + bad.join(", ") + ". Use \"Desfazer este ajuste\" ou confira."
+        : "✓ " + n + " SKU(s) atualizados na planilha (backup salvo).";
+      this.setState({
+        applying: false,
+        applyMsg: head + (extra.length ? " · " + extra.join(" · ") : ""),
+        baixaText: "",
+        lastUndo: out.backupId ? { id: out.backupId } : null,
+      });
+      this.load(true);
+      if (this.state.bkOpen) this.loadBackups();
+    } catch (e) {
+      this.setState({ applying: false, applyMsg: "Erro ao gravar: " + (e && e.message ? e.message : e) + " — clique em Aprovar de novo SEM mudar a lista: o mesmo lote é reenviado e não duplica." });
+      this.load(true);
+    }
+  }
+
+  // Envia um lote com segurança: POST → se a resposta falhar, pergunta ao
+  // script se o lote já foi gravado → tenta de novo (POST e depois GET).
+  async sendBatch(data) {
+    const body = JSON.stringify({ ...data, token: this.token() });
+    let lastErr = null;
+    for (let attempt = 1; attempt <= 4; attempt++) {
+      try {
+        const out = attempt <= 2 || body.length > 6000
+          ? await this.postScript(body)
+          : await this.getScript({ action: "post", payload: body });
+        if (out && out.ok && data.action === "apply" && !out.batchId) {
+          throw new Error("o Apps Script publicado é a versão antiga. Cole o apps-script.gs e publique uma Nova versão (veja apps-script-instrucoes.md).");
+        }
+        if (out && out.ok) return out;
+        if (out && /sessao expirada/.test(out.error || "")) throw new Error("Sessão expirada: saia e entre de novo.");
+        lastErr = new Error((out && out.error) || "resposta inválida do Apps Script");
+      } catch (err) {
+        if (/versão antiga|Sessão expirada/.test(err.message)) throw err;
+        lastErr = err;
+      }
+      if (data.batchId) {
+        try {
+          const st = await this.getScript({ action: "status", batch: data.batchId });
+          if (st && st.ok && st.applied) return st;
+        } catch (e) {}
+      }
+      if (attempt < 4) await new Promise(r => setTimeout(r, 1500 * attempt));
+    }
+    throw lastErr || new Error("sem resposta do Apps Script");
+  }
+
+  async getScript(params) {
+    const qs = Object.keys(params).map(k => encodeURIComponent(k) + "=" + encodeURIComponent(params[k])).join("&");
+    const res = await fetch(this.SCRIPT_URL + "?" + qs + "&_=" + Date.now(), { cache: "no-store" });
+    const text = await res.text();
+    try { return JSON.parse(text); }
+    catch (e) { throw new Error("o Google respondeu com uma página de erro (HTTP " + res.status + ")"); }
+  }
+
+  // POST ao Apps Script lendo a resposta como TEXTO: se vier HTML (página de
+  // erro do Google) extrai uma mensagem legível em vez de quebrar no JSON.
+  async postScript(body) {
+    const res = await fetch(this.SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body,
+    });
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      let msg = "";
+      try {
+        const doc = new DOMParser().parseFromString(text, "text/html");
+        doc.querySelectorAll("script,style").forEach(n => n.remove());
+        msg = (doc.body ? doc.body.textContent : "").replace(/\s+/g, " ").trim().slice(0, 200);
+        if (!msg && doc.title) msg = doc.title;
+      } catch (e2) {}
+      throw new Error("o Google respondeu com uma página de erro (HTTP " + res.status + ")" + (msg ? ": " + msg : ""));
+    }
+  }
+
+  // ---- backups ----
+  async loadBackups() {
+    if (!this.SCRIPT_URL) return;
+    this.setState({ bkLoading: true });
+    try {
+      const out = await this.getScript({ action: "listBackups" });
+      if (!out || !out.ok) throw new Error((out && out.error) || "resposta inválida");
+      this.setState({ backups: out.backups || [], bkLoading: false });
+    } catch (e) {
+      this.setState({ bkLoading: false, bkMsg: "Erro ao listar backups: " + (e && e.message ? e.message : e) + " (o Apps Script foi atualizado para a v2?)" });
+    }
+  }
+
+  async backupNow() {
+    if (this.state.bkBusy) return;
+    this.setState({ bkBusy: true, bkMsg: "Criando backup…" });
+    try {
+      const out = await this.postScript(JSON.stringify({ action: "backup", note: "Backup manual", token: this.token() }));
+      if (!out || !out.ok) throw new Error((out && out.error) || "resposta inválida");
+      this.setState({ bkBusy: false, bkMsg: "✓ Backup criado: " + out.backup.at });
+      this.loadBackups();
+    } catch (e) {
+      this.setState({ bkBusy: false, bkMsg: "Erro ao criar backup: " + (e && e.message ? e.message : e) });
+    }
+  }
+
+  async restoreBackup(bk, scope) {
+    if (this.state.bkBusy || this.state.applying) return;
+    const txt = scope === "lote"
+      ? "DESFAZER o ajuste de " + bk.at + "?\n\nOs SKUs alterados naquele ajuste voltam ao valor que tinham ANTES dele.\n(Se esses SKUs mudaram depois, essas mudanças posteriores também serão perdidas.)"
+      : "RESTAURAR TUDO para " + bk.at + "?\n\nA coluna TOTAL UN (e ATUALIZAÇÃO) de TODOS os SKUs volta para como estava nesse momento. Tudo que mudou depois disso será desfeito.";
+    if (!confirm(txt + "\n\nO estado atual será salvo num backup antes, então dá para voltar.")) return;
+    this.setState({ bkBusy: true, applying: true, bkMsg: "Restaurando…", applyMsg: null });
+    try {
+      const out = await this.postScript(JSON.stringify({ action: "restore", id: bk.id, scope, token: this.token() }));
+      if (!out || !out.ok) throw new Error((out && out.error) || "resposta inválida");
+      const m = "✓ Restaurado (" + bk.at + "): " + out.totalChanged + " SKU(s) com TOTAL alterado." +
+        (out.missing && out.missing.length ? " · não estão mais na aba: " + out.missing.join(", ") : "");
+      this.setState({ bkBusy: false, applying: false, bkMsg: m, applyMsg: this.state.baixaOpen ? m : null, lastUndo: null });
+      this.load(true);
+      this.loadBackups();
+    } catch (e) {
+      this.setState({ bkBusy: false, applying: false, bkMsg: "Erro ao restaurar: " + (e && e.message ? e.message : e) + " — confira a lista de backups antes de tentar de novo." });
+      this.loadBackups();
+    }
+  }
+
+  async undoLast() {
+    const u = this.state.lastUndo;
+    if (!u) return;
+    await this.restoreBackup({ id: u.id, at: "agora há pouco" }, "lote");
+  }
+
+  exportStamp() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
+
+  exportExcel() {
+    if (!window.XLSX) { alert("A biblioteca de Excel ainda está carregando. Tente novamente em alguns instantes."); return; }
+    if (!this.state.raw.length) { alert("Não há dados para exportar."); return; }
+    const rows = this.state.raw.map(p => ({
+      "Código": p.cod,
+      "Descrição": p.desc,
+      "Total Un": p.totalNum,
+      "Por Caixa": p.porCx,
+      "Cx Fechada": p.cFechada,
+      "Cx Aberta": p.cAberta,
+      "Localização": p.locals.join(", ") || "—",
+      "Atualização": p.atualizacao,
+      "Verificado": p.verified ? "Sim" : "Não",
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws["!cols"] = [{ wch: 8 }, { wch: 46 }, { wch: 9 }, { wch: 10 }, { wch: 11 }, { wch: 10 }, { wch: 16 }, { wch: 12 }, { wch: 11 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Estoque Cubas");
+    XLSX.writeFile(wb, "estoque-cubas-" + this.exportStamp() + ".xlsx");
+  }
+
+  exportPdf() {
+    const J = window.jspdf && window.jspdf.jsPDF;
+    if (!J) { alert("A biblioteca de PDF ainda está carregando. Tente novamente em alguns instantes."); return; }
+    if (!this.state.raw.length) { alert("Não há dados para exportar."); return; }
+    const doc = new J({ orientation: "landscape", unit: "pt", format: "a4" });
+    const body = this.state.raw.map(p => {
+      return [
+        p.cod, p.desc, String(p.totalNum), p.porCx, p.cFechada, p.cAberta,
+        p.locals.join(", ") || "—", p.atualizacao, p.verified ? "Sim" : "Não",
+      ];
+    });
+    doc.setFontSize(14);
+    doc.text("Estoque Cubas — Almoxarifado", 40, 36);
+    doc.setFontSize(9);
+    doc.setTextColor(120);
+    doc.text("Gerado em " + new Date().toLocaleString("pt-BR") + "  ·  " + body.length + " itens", 40, 52);
+    doc.autoTable({
+      head: [["Código", "Descrição", "Total Un", "Por Cx", "Cx Fech.", "Cx Aberta", "Localização", "Atualização", "Ver."]],
+      body,
+      startY: 64,
+      styles: { fontSize: 8, cellPadding: 4, overflow: "linebreak" },
+      headStyles: { fillColor: [47, 109, 240], textColor: 255, fontStyle: "bold" },
+      alternateRowStyles: { fillColor: [244, 247, 251] },
+      columnStyles: { 1: { cellWidth: 200 } },
+    });
+    doc.save("estoque-cubas-" + this.exportStamp() + ".pdf");
+  }
+
+  // Converte o CSV exportado da planilha em matriz de strings.
+  // Trata aspas, vírgulas dentro do texto e quebras de linha dentro da célula.
+  parseCsv(text) {
+    const rows = [];
+    let row = [], val = "", inQuotes = false;
+    const s = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i];
+      if (inQuotes) {
+        if (ch === '"') {
+          if (s[i + 1] === '"') { val += '"'; i++; }
+          else inQuotes = false;
+        } else val += ch;
+      } else if (ch === '"') inQuotes = true;
+      else if (ch === ",") { row.push(val); val = ""; }
+      else if (ch === "\n") { row.push(val); rows.push(row); row = []; val = ""; }
+      else val += ch;
+    }
+    if (val !== "" || row.length) { row.push(val); rows.push(row); }
+    return rows;
+  }
+
+  async load(isAuto) {
+    this.setState({ refreshing: true });
+    try {
+      // Exportação CSV: preserva o código exatamente como está na planilha,
+      // inclusive SKUs com texto (ex.: "5742(P)"). A API gviz tratava a coluna
+      // A como numérica e devolvia vazio nesses casos.
+      const url = "https://docs.google.com/spreadsheets/d/" + this.SHEET +
+        "/export?format=csv&gid=" + this.GID + "&_=" + Date.now();
+      const res = await fetch(url, { cache: "no-store" });
+      const text = await res.text();
+      const grid = this.parseCsv(text);
+
+      // Colunas localizadas pelo nome no cabeçalho (COD., DESCRICAO, TOTAL UN...).
+      // Sem cabeçalho reconhecível, vale o padrão A..I do Estoque MKT.
+      const C = this.findCols(grid);
+      const products = [];
+      for (let gi = C.start; gi < grid.length; gi++) {
+        const rr = grid[gi], r = [C.cod, C.desc, C.total, C.porCx, C.cFech, C.cAb, C.local, C.atual, C.verif].map(i => i < 0 ? "" : (rr[i] || ""));
+        const cod = (r[0] || "").trim();
+        const desc = (r[1] || "").trim();
+        // Linha só é vazia sem código E sem descrição: SKU sem descrição continua valendo.
+        if (!cod && !desc) continue;
+        const cu = cod.toUpperCase();
+        if (cu === "COD." || cu === "COD" || desc.toUpperCase() === "DESCRICAO" || desc.toUpperCase() === "DESCRIÇÃO") continue;
+        if (/^ESTOQUE (MKT|CUBAS)$/.test(cu) || /^ESTOQUE (MKT|CUBAS)$/.test(desc.toUpperCase())) continue;
+        const localRaw = (r[6] || "").trim();
+        const verif = (r[8] || "").trim().toUpperCase();
+        const isVer = verif === "TRUE" || verif === "1" || verif === "VERDADEIRO" || verif === "SIM" || verif === "X" || verif === "✓" || verif === "YES" || verif === "Y";
+        products.push({
+          cod: cod || "—",
+          desc: desc || "(sem descrição)",
+          noDesc: !desc,
+          dateKey: this.dateKey(r[7]),
+          totalDisp: (r[2] || "").trim() || "0",
+          totalNum: this.toNum(r[2]),
+          porCx: (r[3] || "").trim() || "—",
+          cFechada: (r[4] || "").trim() || "0",
+          cAberta: (r[5] || "").trim() || "0",
+          locals: localRaw ? localRaw.split(/[,/]+/).map(x => x.trim()).filter(Boolean) : [],
+          noLocal: !localRaw,
+          atualizacao: (r[7] || "").trim() || "—",
+          verified: isVer,
+          notVerified: !isVer,
+        });
+      }
+      const st = { raw: products, loading: false, error: null, lastUpdated: Date.now(), refreshing: false };
+      this.setState(st);
+    } catch (e) {
+      this.setState({
+        loading: false,
+        refreshing: false,
+        error: "Verifique se a planilha está compartilhada como \"qualquer pessoa com o link pode ver\". Detalhe técnico: " + (e && e.message ? e.message : e),
+      });
+    }
+  }
+
+  findCols(grid) {
+    const norm = v => String(v || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    const def = { start: 0, cod: 0, desc: 1, total: 2, porCx: 3, cFech: 4, cAb: 5, local: 6, atual: 7, verif: 8 };
+    for (let ri = 0; ri < Math.min(6, grid.length); ri++) {
+      const h = (grid[ri] || []).map(norm);
+      const at = (...names) => { for (const n of names) { const i = h.indexOf(n); if (i >= 0) return i; } return -1; };
+      const cod = at("COD", "CODIGO", "SKU");
+      const total = at("TOTALUN", "TOTAL", "TOTALUNIDADES", "QTD", "ESTOQUE");
+      if (cod < 0 || total < 0) continue;
+      return { start: ri + 1, cod, total, desc: at("DESCRICAO", "DESCRIC", "PRODUTO"), porCx: at("PORCX", "PORCAIXA", "PCX"),
+        cFech: at("CFECHADA", "CXFECHADA", "CAIXAFECHADA", "CFECH"), cAb: at("CABERTA", "CXABERTA", "CAIXAABERTA"),
+        local: at("LOCALIZACAO", "LOCAL", "LOCALIZ"), atual: at("ATUALIZACAO", "ATUALIZADO", "DATA"), verif: at("VERIFICADO", "VER", "OK") };
+    }
+    return def;
+  }
+
+  // "30/10/2026" vira "2026-10-30", que dá para comparar e ordenar como texto.
+  dateKey(v) {
+    const m = String(v || "").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    return m ? m[3] + "-" + m[2].padStart(2, "0") + "-" + m[1].padStart(2, "0") : "";
+  }
+
+  // Abre a janela da coluna logo abaixo do cabeçalho, sem sair da tela.
+  openCol(col, e) {
+    if (this.state.popCol === col) { this.setState({ popCol: null }); return; }
+    const box = e.currentTarget.getBoundingClientRect();
+    const w = 270;
+    const vw = document.documentElement.clientWidth;
+    const popX = Math.max(8, Math.min(box.left, vw - w - 8));
+    // Perto do fim da tela, sobe o suficiente para caber inteira.
+    const popY = Math.max(8, Math.min(box.bottom + 6, window.innerHeight - 340));
+    this.setState({ popCol: col, popX, popY });
+  }
+
+  setColFilter(patch) {
+    this.setState(st => ({ colFilter: { ...st.colFilter, ...patch } }));
+  }
+
+  toggleSort(key, dir) {
+    this.setState(st => ({
+      colSort: st.colSort && st.colSort.key === key && st.colSort.dir === dir ? null : { key, dir },
+    }));
+  }
+
+  colFiltered(col, f) {
+    if (col === "cod") return !!f.cod.trim();
+    if (col === "desc") return !!f.desc.trim();
+    if (col === "total") return f.min !== "" || f.max !== "";
+    return !!(f.from || f.to);
+  }
+
+  clearCol(col) {
+    const patch = col === "cod" ? { cod: "" } : col === "desc" ? { desc: "" }
+      : col === "total" ? { min: "", max: "" } : { from: "", to: "" };
+    this.setState(st => ({
+      colFilter: { ...st.colFilter, ...patch },
+      colSort: st.colSort && st.colSort.key === col ? null : st.colSort,
+    }));
+  }
+
+  colHead(col, right) {
+    const s = this.state;
+    const on = this.colFiltered(col, s.colFilter);
+    const sorted = s.colSort && s.colSort.key === col ? s.colSort.dir : null;
+    const hot = on || !!sorted || s.popCol === col;
+    return {
+      open: e => this.openCol(col, e),
+      mark: sorted === "asc" ? "↑" : sorted === "desc" ? "↓" : "▾",
+      markStyle: "font-size:11px;color:" + (hot ? "#9fc1ff" : "#46505e") + ";",
+      style: "width:100%;background:" + (on ? "#16233f" : "transparent") + ";border:1px solid " + (on ? "#2f6df0" : "transparent") +
+        ";color:" + (hot ? "#9fc1ff" : "#6b7889") + ";padding:5px 6px;font-size:10px;font-weight:600;letter-spacing:1px;font-family:inherit;cursor:pointer;white-space:nowrap;text-align:" + (right ? "right" : "left") + ";",
+    };
+  }
+
+  fieldButton(key, label) {
+    const active = this.state.field === key;
+    const base = "border:none;cursor:pointer;padding:9px 14px;font-size:12px;font-weight:600;letter-spacing:.3px;white-space:nowrap;";
+    const style = active
+      ? base + "background:#2f6df0;color:#fff;"
+      : base + "background:transparent;color:#8b97a6;";
+    return { key, label, style, onClick: () => this.setState({ field: key }) };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const thr = Number(s.threshold) || 0;
+    const q = s.query.trim().toLowerCase();
+    const fmt2 = n => n.toLocaleString("pt-BR");
+
+    const codeCounts = {};
+    s.raw.forEach(p => { if (p.cod && p.cod !== "—") codeCounts[p.cod] = (codeCounts[p.cod] || 0) + 1; });
+
+    // ---- baixa de estoque (simulação) ----
+    const baixaAll = s.baixaOpen ? this.computeBaixa(s) : [];
+    const simMap = new Map();
+    baixaAll.forEach(b => { if (b.found) simMap.set(b.cod.toUpperCase(), b); });
+
+    let list = s.raw.map(p => ({ ...p, low: p.totalNum > 0 && p.totalNum < thr, dup: !!(p.cod && p.cod !== "—" && codeCounts[p.cod] > 1) }));
+
+    if (q) {
+      list = list.filter(p => {
+        if (s.field === "cod") return p.cod.toLowerCase().includes(q);
+        if (s.field === "desc") return p.desc.toLowerCase().includes(q);
+        if (s.field === "local") return p.locals.join(" ").toLowerCase().includes(q);
+        return (p.cod + " " + p.desc + " " + p.locals.join(" ")).toLowerCase().includes(q);
+      });
+    }
+    if (s.onlyLow) list = list.filter(p => p.low);
+
+    // ---- filtros e ordenação por coluna ----
+    const cf = s.colFilter;
+    const fCod = cf.cod.trim().toLowerCase(), fDesc = cf.desc.trim().toLowerCase();
+    if (fCod) list = list.filter(p => p.cod.toLowerCase().includes(fCod));
+    if (fDesc) list = list.filter(p => p.desc.toLowerCase().includes(fDesc));
+    if (cf.min !== "") list = list.filter(p => p.totalNum >= Number(cf.min));
+    if (cf.max !== "") list = list.filter(p => p.totalNum <= Number(cf.max));
+    if (cf.from) list = list.filter(p => p.dateKey && p.dateKey >= cf.from);
+    if (cf.to) list = list.filter(p => p.dateKey && p.dateKey <= cf.to);
+    if (s.colSort) {
+      const { key, dir } = s.colSort, sign = dir === "asc" ? 1 : -1;
+      const text = (a, b) => a.localeCompare(b, "pt-BR", { numeric: true, sensitivity: "base" });
+      // Item sem descrição ou sem data fica sempre no fim, nos dois sentidos.
+      const blank = p => (key === "desc" && p.noDesc) || (key === "date" && !p.dateKey) || (key === "cod" && p.cod === "—");
+      list = [...list].sort((a, b) => {
+        const ba = blank(a), bb = blank(b);
+        if (ba !== bb) return ba ? 1 : -1;
+        if (key === "total") return sign * (a.totalNum - b.totalNum);
+        if (key === "date") return sign * a.dateKey.localeCompare(b.dateKey);
+        return sign * text(key === "cod" ? a.cod : a.desc, key === "cod" ? b.cod : b.desc);
+      });
+    }
+
+    const rowBase = "display:grid;grid-template-columns:3px 86px minmax(240px,1fr) 86px 64px 78px 84px 130px 116px 58px;border-bottom:1px solid #161b24;transition:background .12s;";
+    const rows = list.map(p => {
+      const totalBase = "padding:13px 10px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;letter-spacing:.3px;";
+      const sim = simMap.get((p.cod || "").toUpperCase());
+      const simNeg = !!(sim && sim.neg);
+      const rowBg = simNeg ? "background:rgba(239,93,93,.16);"
+        : sim ? "background:rgba(47,109,240,.08);"
+        : p.dup ? "background:rgba(239,93,93,.12);"
+        : p.low ? "background:rgba(243,167,64,.05);" : "";
+      const barColor = simNeg ? "#ef5d5d" : sim ? "#2f6df0" : p.dup ? "#ef5d5d" : p.low ? "#f3a740" : "transparent";
+      const totalColor = simNeg ? "#ef5d5d" : sim ? "#9fc1ff" : p.low ? "#f3a740" : "#eef3f8";
+      return {
+        ...p,
+        totalDisp: sim ? p.totalNum.toLocaleString("pt-BR") + " → " + sim.result.toLocaleString("pt-BR") : p.totalDisp,
+        rowStyle: rowBase + rowBg,
+        barStyle: "align-self:stretch;background:" + barColor + ";",
+        totalStyle: totalBase + "color:" + totalColor + ";",
+        codStyle: "padding:13px 10px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.3px;color:" + ((simNeg || p.dup) ? "#ef5d5d" : "#9fc1ff") + ";",
+      };
+    });
+
+    // stats from full dataset
+    const totalItens = s.raw.length;
+    const totalUn = s.raw.reduce((a, p) => a + p.totalNum, 0);
+    const lowCount = s.raw.filter(p => p.totalNum > 0 && p.totalNum < thr).length;
+    const locSet = new Set();
+    s.raw.forEach(p => p.locals.forEach(l => locSet.add(l.toUpperCase())));
+
+    const numBase = "font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;letter-spacing:-.5px;margin-top:6px;line-height:1;";
+    const fmt = n => n.toLocaleString("pt-BR");
+
+
+    const tiles = [
+      { label: "Geral", value: fmt(totalUn), sub: "soma do total un.", numStyle: numBase + "color:#eef3f8;" },
+      { label: "Itens cadastrados", value: fmt(totalItens), sub: "produtos na aba", numStyle: numBase + "color:#eef3f8;" },
+      { label: "Estoque baixo", value: fmt(lowCount), sub: "abaixo de " + thr + " un.", numStyle: numBase + (lowCount > 0 ? "color:#f3a740;" : "color:#5f6b7a;") },
+      { label: "Localizações", value: fmt(locSet.size), sub: "endereços distintos", numStyle: numBase + "color:#eef3f8;" },
+    ];
+
+    // updated time
+    let updatedTime = "—", updatedAgo = "aguardando…";
+    if (s.lastUpdated) {
+      const d = new Date(s.lastUpdated);
+      updatedTime = d.toLocaleTimeString("pt-BR");
+      const secs = Math.max(0, Math.floor((Date.now() - s.lastUpdated) / 1000));
+      updatedAgo = secs < 5 ? "agora mesmo" : secs < 60 ? "há " + secs + "s" : "há " + Math.floor(secs / 60) + " min";
+    }
+
+    const lowBase = "display:flex;align-items:center;gap:7px;border:1px solid #2c3744;padding:9px 14px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.3px;white-space:nowrap;";
+    const lowToggleStyle = s.onlyLow
+      ? lowBase + "background:rgba(243,167,64,.12);color:#f3a740;border-color:#7a5a23;"
+      : lowBase + "background:#11151c;color:#8b97a6;";
+
+    // ---- janela do filtro por coluna ----
+    const pc = s.popCol;
+    const popCfg = {
+      cod: { title: "CÓDIGO", asc: "Menor → maior", desc: "Maior → menor" },
+      desc: { title: "DESCRIÇÃO", asc: "A → Z", desc: "Z → A" },
+      total: { title: "TOTAL UN", asc: "Menor → maior", desc: "Maior → menor" },
+      date: { title: "ATUALIZAÇÃO", asc: "Mais antiga", desc: "Mais recente" },
+    }[pc] || { title: "", asc: "", desc: "" };
+    const sortBtn = dir => {
+      const on = s.colSort && s.colSort.key === pc && s.colSort.dir === dir;
+      return "flex:1;padding:8px 6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid " + (on ? "#2f6df0" : "#2c3744") +
+        ";background:" + (on ? "#2f6df0" : "#161b24") + ";color:" + (on ? "#fff" : "#cdd6e1") + ";";
+    };
+    const brDate = v => v.split("-").reverse().join("/");
+    const colParts = [];
+    if (fCod) colParts.push("Código contém \"" + cf.cod.trim() + "\"");
+    if (fDesc) colParts.push("Descrição contém \"" + cf.desc.trim() + "\"");
+    if (cf.min !== "") colParts.push("Total a partir de " + cf.min);
+    if (cf.max !== "") colParts.push("Total até " + cf.max);
+    if (cf.from) colParts.push("Atualização desde " + brDate(cf.from));
+    if (cf.to) colParts.push("Atualização até " + brDate(cf.to));
+    if (s.colSort) {
+      const c = { cod: "código", desc: "descrição", total: "total", date: "atualização" }[s.colSort.key];
+      colParts.push("Ordenado por " + c + (s.colSort.dir === "asc" ? " ↑" : " ↓"));
+    }
+    const colActive = colParts.length > 0;
+    const colActiveText = colParts.join(" · ");
+
+    const resultText = s.loading
+      ? "Carregando dados…"
+      : "Mostrando " + list.length + " de " + s.raw.length + " itens" + (q ? " · filtro \"" + s.query.trim() + "\"" : "");
+
+    // ---- painel de baixa: view models ----
+    const negList = baixaAll.filter(b => b.neg);
+    const nfList = baixaAll.filter(b => !b.found);
+    const itemRowBase = "display:grid;grid-template-columns:100px minmax(180px,1fr) 90px 90px 100px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid #161b24;font-size:12.5px;";
+    const baixaItems = baixaAll.map(b => ({
+      cod: b.cod,
+      desc: b.found ? b.desc : "SKU não encontrado na planilha",
+      curDisp: b.found ? fmt(b.cur) : "—",
+      qtyDisp: (s.baixaMode === "definir" ? "=" : s.baixaMode === "entrada" ? "+" : "−") + fmt(b.qty),
+      qtyStyle: "text-align:right;font-family:'IBM Plex Mono',monospace;color:" + (s.baixaMode === "definir" ? "#7fa5f5" : s.baixaMode === "entrada" ? "#35d49a" : "#f3a740") + ";",
+      resDisp: b.found ? fmt(b.result) : "—",
+      style: itemRowBase + (b.neg ? "background:rgba(239,93,93,.14);" : (!b.found ? "background:rgba(243,167,64,.10);" : "")),
+      codStyle: "font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.3px;color:" + ((b.neg || !b.found) ? "#ef5d5d" : "#9fc1ff") + ";",
+      resStyle: "text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;color:" + (b.neg ? "#ef5d5d" : "#35d49a") + ";",
+    }));
+
+    const baixaBtnBase = "display:flex;align-items:center;gap:7px;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.3px;white-space:nowrap;border:1px solid;";
+    const baixaBtnStyle = s.baixaOpen
+      ? baixaBtnBase + "background:#2f6df0;color:#fff;border-color:#4d82ff;"
+      : baixaBtnBase + "background:#131a2b;color:#7fa5f5;border-color:#2a3d66;";
+
+    const modeBase = "border:none;cursor:pointer;padding:8px 14px;font-size:12px;font-weight:600;letter-spacing:.3px;white-space:nowrap;";
+    const modeSaidaStyle = s.baixaMode === "saida"
+      ? modeBase + "background:#5a2626;color:#ffb0b0;"
+      : modeBase + "background:transparent;color:#8b97a6;";
+    const modeEntradaStyle = s.baixaMode === "entrada"
+      ? modeBase + "background:#1a5c3f;color:#c6f2dd;"
+      : modeBase + "background:transparent;color:#8b97a6;";
+    const modeDefinirStyle = s.baixaMode === "definir"
+      ? modeBase + "background:#1c3a6b;color:#bcd4ff;"
+      : modeBase + "background:transparent;color:#8b97a6;";
+
+    const approveBase = "display:flex;align-items:center;gap:7px;padding:10px 18px;font-size:12.5px;font-weight:600;letter-spacing:.4px;border:1px solid;";
+    const approveStyle = s.applying
+      ? approveBase + "background:#173026;color:#3a6b55;border-color:#245741;cursor:wait;"
+      : approveBase + "background:#1a5c3f;color:#c6f2dd;border-color:#2f9166;cursor:pointer;";
+
+    const applyOk = (s.applyMsg || "").indexOf("✓") === 0;
+    const applyWarn = (s.applyMsg || "").indexOf("⚠") === 0 || s.applying;
+    const applyMsgStyle = "font-size:12px;line-height:1.5;color:" + (applyOk ? "#35d49a" : applyWarn ? "#f3a740" : "#ef5d5d") + ";";
+
+    // ---- painel de backups ----
+    const bkBtnStyle = s.bkOpen
+      ? baixaBtnBase + "background:#b98a2f;color:#1a1408;border-color:#d9a640;"
+      : baixaBtnBase + "background:#211c12;color:#e8c27a;border-color:#5a4720;";
+    const bkF = (s.bkFilter || "").trim().toLowerCase();
+    const tipoColor = { auto: "#7fa5f5", manual: "#e8c27a", diario: "#35d49a", restauracao: "#ef9a86" };
+    const tipoNome = { auto: "ajuste", manual: "manual", diario: "diário", restauracao: "restauração" };
+    const bkRows = (s.backups || [])
+      .filter(b => !bkF || (b.at + " " + b.desc + " " + b.tipo).toLowerCase().includes(bkF))
+      .map(b => ({
+        ...b,
+        tipo: tipoNome[b.tipo] || b.tipo,
+        tipoStyle: "font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:" + (tipoColor[b.tipo] || "#8b97a6") + ";",
+        hasLote: b.tipo === "auto" && !!b.lote,
+        undo: () => this.restoreBackup(b, "lote"),
+        restore: () => this.restoreBackup(b, "all"),
+      }));
+    const bkOk = (s.bkMsg || "").indexOf("✓") === 0;
+
+    const loginBtnBase = "margin-top:4px;padding:11px 16px;font-size:13px;font-weight:600;letter-spacing:.4px;border:1px solid #4d82ff;color:#fff;";
+
+    return {
+      ...this.presenceView(s),
+      authed: !!s.auth,
+      notAuthed: !s.auth,
+      loginUser: s.loginUser,
+      loginPass: s.loginPass,
+      onLoginUser: e => this.setState({ loginUser: e.target.value, loginErr: null }),
+      onLoginPass: e => this.setState({ loginPass: e.target.value, loginErr: null }),
+      submitLogin: e => this.submitLogin(e),
+      loginErrShow: !!s.loginErr,
+      loginErr: s.loginErr || "",
+      loginBtnStyle: loginBtnBase + (s.loginBusy ? "background:#1d3f8a;cursor:wait;" : "background:#2f6df0;cursor:pointer;"),
+      loginBtnLabel: s.loginBusy ? "Entrando…" : "Entrar",
+      logoutBtn: () => this.logout(),
+      bkOpen: s.bkOpen,
+      bkBtnStyle,
+      toggleBk: () => { const open = !this.state.bkOpen; this.setState({ bkOpen: open, bkMsg: null }); if (open) this.loadBackups(); },
+      backupNow: () => this.backupNow(),
+      reloadBk: () => { this.setState({ bkMsg: null }); this.loadBackups(); },
+      bkFilter: s.bkFilter,
+      onBkFilter: e => this.setState({ bkFilter: e.target.value }),
+      bkMsgShow: !!s.bkMsg,
+      bkMsg: s.bkMsg || "",
+      bkMsgStyle: "font-size:12px;line-height:1.5;color:" + (bkOk ? "#35d49a" : (s.bkBusy ? "#e8c27a" : "#ef5d5d")) + ";",
+      bkRows,
+      bkEmpty: bkRows.length === 0,
+      bkEmptyText: s.bkLoading ? "Carregando backups…" : (bkF ? "Nenhum backup para \"" + s.bkFilter.trim() + "\"" : "Nenhum backup ainda. Será criado automaticamente no próximo ajuste, ou clique em \"Criar backup agora\"."),
+      applyAreaShow: !!s.applyMsg || !!s.lastUndo,
+      canUndoLast: !!s.lastUndo && !s.applying,
+      undoLast: () => this.undoLast(),
+      baixaOpen: s.baixaOpen,
+      baixaText: s.baixaText,
+      baixaBtnStyle,
+      baixaTitle: s.baixaMode === "definir" ? "DEFINIR ESTOQUE (VALOR FINAL)" : s.baixaMode === "entrada" ? "ENTRADA DE ESTOQUE" : "BAIXA DE ESTOQUE",
+      baixaHint: s.baixaMode === "definir"
+        ? "Cole (Ctrl+V) as colunas SKU e quantidade. A quantidade colada VIRA o estoque final (substitui o atual). Nada é gravado até você aprovar."
+        : s.baixaMode === "entrada"
+        ? "Cole (Ctrl+V) as colunas SKU e quantidade. As quantidades serão SOMADAS ao estoque atual. Nada é gravado até você aprovar."
+        : "Cole (Ctrl+V) as colunas SKU e quantidade copiadas do Excel/Google Sheets. As quantidades serão SUBTRAÍDAS do estoque. Nada é gravado até você aprovar.",
+      qtyColLabel: s.baixaMode === "definir" ? "FINAL" : s.baixaMode === "entrada" ? "ENTRADA" : "BAIXA",
+      modeSaida: () => this.setState({ baixaMode: "saida", applyMsg: null }),
+      modeEntrada: () => this.setState({ baixaMode: "entrada", applyMsg: null }),
+      modeDefinir: () => this.setState({ baixaMode: "definir", applyMsg: null }),
+      modeSaidaStyle,
+      modeEntradaStyle,
+      modeDefinirStyle,
+      baixaItems,
+      hasBaixaItems: baixaAll.length > 0,
+      baixaSummary: baixaAll.length + " SKU(s) colado(s) · " + negList.length + " negativo(s) · " + nfList.length + " não encontrado(s)",
+      baixaHasNeg: negList.length > 0,
+      baixaNegText: negList.map(b => b.cod + " (" + fmt(b.result) + ")").join(", "),
+      approveStyle,
+      approveLabel: s.applying ? "Gravando na planilha…" : "Aprovar mudanças",
+      applyMsgShow: !!s.applyMsg,
+      applyMsg: s.applyMsg || "",
+      applyMsgStyle,
+      toggleBaixa: () => this.setState(st => ({ baixaOpen: !st.baixaOpen, applyMsg: null })),
+      onBaixaText: e => this.setState({ baixaText: e.target.value, applyMsg: null }),
+      clearBaixa: () => this.setState({ baixaText: "", applyMsg: null }),
+      approveBaixa: () => this.approveBaixa(baixaAll),
+      query: s.query,
+      hasQuery: q.length > 0,
+      threshold: s.threshold,
+      fields: [
+        this.fieldButton("todos", "Todos"),
+        this.fieldButton("cod", "Código"),
+        this.fieldButton("desc", "Descrição"),
+        this.fieldButton("local", "Local"),
+      ],
+      lowToggleStyle,
+      tiles,
+      rows,
+      hCod: this.colHead("cod"),
+      hDesc: this.colHead("desc"),
+      hTotal: this.colHead("total", true),
+      hDate: this.colHead("date"),
+      colActive,
+      colActiveText,
+      clearCols: () => this.setState({ colFilter: { cod: "", desc: "", min: "", max: "", from: "", to: "" }, colSort: null }),
+      popOpen: !!pc,
+      popStyle: "position:fixed;z-index:51;top:" + s.popY + "px;left:" + s.popX + "px;width:270px;max-height:calc(100vh - " + (s.popY + 12) + "px);overflow:auto;display:flex;flex-direction:column;gap:10px;padding:12px;background:#11151c;border:1px solid #2c3744;border-top:2px solid #2f6df0;box-shadow:0 12px 30px rgba(0,0,0,.55);",
+      popTitle: popCfg.title,
+      closePop: () => this.setState({ popCol: null }),
+      clearPop: () => this.clearCol(pc),
+      sortAsc: () => this.toggleSort(pc, "asc"),
+      sortDesc: () => this.toggleSort(pc, "desc"),
+      sortAscLabel: popCfg.asc,
+      sortDescLabel: popCfg.desc,
+      sortAscStyle: sortBtn("asc"),
+      sortDescStyle: sortBtn("desc"),
+      popIsText: pc === "cod" || pc === "desc",
+      popIsNum: pc === "total",
+      popIsDate: pc === "date",
+      popTextHint: pc === "cod" ? "Ex.: 64" : "Ex.: APOLLO",
+      popTextVal: pc === "cod" ? cf.cod : cf.desc,
+      onPopText: e => this.setColFilter(this.state.popCol === "cod" ? { cod: e.target.value } : { desc: e.target.value }),
+      popMin: cf.min,
+      popMax: cf.max,
+      onPopMin: e => this.setColFilter({ min: e.target.value }),
+      onPopMax: e => this.setColFilter({ max: e.target.value }),
+      popFrom: cf.from,
+      popTo: cf.to,
+      onPopFrom: e => this.setColFilter({ from: e.target.value }),
+      onPopTo: e => this.setColFilter({ to: e.target.value }),
+      skeleton: s.loading ? [1, 2, 3, 4, 5, 6, 7, 8] : [],
+      isEmpty: !s.loading && !s.error && list.length === 0,
+      emptySuffix: q ? " para \"" + s.query.trim() + "\"" : (s.onlyLow ? " com estoque baixo" : (colActive ? " com esses filtros" : "")),
+      hasError: !!s.error && !s.loading,
+      errorMsg: s.error || "",
+      resultText,
+      live: !s.error,
+      offline: !!s.error,
+      liveLabel: s.error ? "OFFLINE" : (s.refreshing ? "SINCRONIZANDO" : "AO VIVO"),
+      updatedTime,
+      updatedAgo,
+      spinStyle: s.refreshing ? "display:inline-block;animation:spin .8s linear infinite;font-size:14px;" : "display:inline-block;font-size:14px;",
+      onSearch: e => this.setState({ query: e.target.value }),
+      clearQuery: () => this.setState({ query: "" }),
+      toggleLow: () => this.setState(st => ({ onlyLow: !st.onlyLow })),
+      exportExcel: () => this.exportExcel(),
+      exportPdf: () => this.exportPdf(),
+      refresh: () => this.load(),
+    };
+  }
+}
+</script>
+</body>
+</html>
